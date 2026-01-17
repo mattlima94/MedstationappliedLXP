@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F4: HIPAA & Compliance | Medstation Fellowship</title>
+    <style>
+        :root {
+            --primary-dark: #1B4F72;
+            --primary-medium: #2874A6;
+            --primary-light: #EBF5FB;
+            --accent-green: #D5F5E3;
+            --accent-yellow: #FCF3CF;
+            --accent-red: #FADBD8;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --border: #CCCCCC;
+            --white: #FFFFFF;
+            --success: #27AE60;
+            --error: #E74C3C;
+            --warning: #F39C12;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
+        
+        .header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%); color: var(--white); padding: 20px 40px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .tagline { font-size: 12px; opacity: 0.9; font-style: italic; }
+        .module-badge { background: var(--accent-yellow); color: var(--text-dark); padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        
+        .pass-gate-banner { background: linear-gradient(90deg, var(--error) 0%, #C0392B 100%); color: var(--white); padding: 15px 40px; text-align: center; font-weight: bold; }
+        .pass-gate-banner span { background: var(--white); color: var(--error); padding: 4px 12px; border-radius: 4px; margin-left: 10px; }
+        
+        .progress-container { background: var(--primary-light); padding: 15px 40px; border-bottom: 1px solid var(--border); }
+        .progress-inner { max-width: 1000px; margin: 0 auto; }
+        .progress-label { font-size: 14px; color: var(--text-medium); margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .progress-bar { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--primary-medium), var(--success)); height: 100%; width: 0%; transition: width 0.5s ease; }
+        
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .module-header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 2px solid var(--primary-light); }
+        .module-number { display: inline-block; background: var(--error); color: var(--white); width: 60px; height: 60px; border-radius: 50%; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 15px; }
+        h1 { font-size: 32px; color: var(--primary-dark); margin-bottom: 10px; }
+        .duration { color: var(--text-medium); font-size: 14px; }
+        .duration span { background: var(--accent-yellow); padding: 4px 12px; border-radius: 12px; margin-left: 5px; }
+        
+        .critical-notice { background: var(--accent-red); border: 2px solid var(--error); border-radius: 12px; padding: 25px; margin-bottom: 30px; text-align: center; }
+        .critical-notice h3 { color: var(--error); margin-bottom: 10px; }
+        
+        .objectives { background: var(--accent-green); border-left: 4px solid var(--success); padding: 25px 30px; margin-bottom: 40px; border-radius: 0 8px 8px 0; }
+        .objectives h2 { color: var(--primary-dark); font-size: 18px; margin-bottom: 15px; }
+        .objectives ul { margin-left: 25px; }
+        .objectives li { margin-bottom: 8px; }
+        
+        .section { margin-bottom: 40px; }
+        h2 { font-size: 24px; color: var(--primary-dark); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-light); }
+        h3 { font-size: 20px; color: var(--primary-medium); margin: 25px 0 15px 0; }
+        p { margin-bottom: 15px; }
+        ul, ol { margin-left: 25px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        
+        .key-concept { background: var(--primary-light); border: 1px solid var(--primary-medium); border-radius: 8px; padding: 20px 25px; margin: 25px 0; }
+        .key-concept-title { font-weight: bold; color: var(--primary-dark); margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .warning-box { background: var(--accent-yellow); border-left: 4px solid var(--warning); padding: 20px 25px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .warning-title { font-weight: bold; color: var(--text-dark); margin-bottom: 8px; }
+        
+        .violation-box { background: var(--accent-red); border-left: 4px solid var(--error); padding: 20px 25px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .violation-title { font-weight: bold; color: var(--error); margin-bottom: 8px; }
+        
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 15px; }
+        th { background: var(--primary-dark); color: var(--white); padding: 12px 15px; text-align: left; }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); }
+        tr:nth-child(even) { background: var(--primary-light); }
+        tr:hover { background: var(--accent-green); }
+        
+        /* PHI Grid */
+        .phi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin: 25px 0; }
+        .phi-item { background: var(--white); border: 2px solid var(--primary-medium); border-radius: 8px; padding: 15px; text-align: center; transition: all 0.3s; }
+        .phi-item:hover { border-color: var(--primary-dark); background: var(--primary-light); transform: translateY(-2px); }
+        .phi-number { display: inline-block; background: var(--primary-dark); color: var(--white); width: 28px; height: 28px; border-radius: 50%; line-height: 28px; font-size: 12px; font-weight: bold; margin-bottom: 8px; }
+        .phi-name { font-weight: bold; color: var(--text-dark); }
+        
+        /* Quiz Styles */
+        .quiz-section { background: var(--primary-light); padding: 40px; border-radius: 12px; margin-top: 50px; }
+        .quiz-section h2 { text-align: center; border-bottom: none; margin-bottom: 10px; }
+        .pass-requirement { text-align: center; color: var(--error); font-weight: bold; margin-bottom: 30px; padding: 15px; background: var(--accent-red); border-radius: 8px; }
+        .question { background: var(--white); border-radius: 8px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .question-number { display: inline-block; background: var(--primary-dark); color: var(--white); width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; font-size: 14px; font-weight: bold; margin-right: 10px; }
+        .question-text { font-weight: bold; margin-bottom: 15px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { display: flex; align-items: center; padding: 12px 15px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+        .option:hover { border-color: var(--primary-medium); background: var(--primary-light); }
+        .option.selected { border-color: var(--primary-dark); background: var(--primary-light); }
+        .option.correct { border-color: var(--success); background: var(--accent-green); }
+        .option.incorrect { border-color: var(--error); background: var(--accent-red); }
+        .option input { margin-right: 12px; transform: scale(1.2); }
+        .feedback { margin-top: 15px; padding: 12px 15px; border-radius: 6px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: var(--accent-green); color: var(--primary-dark); }
+        .feedback.incorrect { background: var(--accent-red); color: var(--error); }
+        
+        .btn { display: inline-block; padding: 14px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; }
+        .btn-primary { background: var(--primary-dark); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-medium); transform: translateY(-2px); }
+        .btn-success { background: var(--success); color: var(--white); }
+        .btn-error { background: var(--error); color: var(--white); }
+        
+        .quiz-controls { text-align: center; margin-top: 30px; }
+        .results { display: none; text-align: center; padding: 30px; background: var(--white); border-radius: 12px; margin-top: 30px; }
+        .results.show { display: block; }
+        .score-circle { width: 140px; height: 140px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; font-weight: bold; }
+        .score-circle.pass { background: var(--success); color: var(--white); }
+        .score-circle.fail { background: var(--error); color: var(--white); }
+        .score-label { font-size: 12px; font-weight: normal; opacity: 0.9; }
+        .results-message { font-size: 18px; margin-bottom: 20px; }
+        
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid var(--primary-light); }
+        .footer { background: var(--primary-dark); color: var(--white); text-align: center; padding: 30px; margin-top: 60px; }
+        
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; }
+            .header-content { flex-direction: column; text-align: center; }
+            .container { padding: 25px 15px; }
+            h1 { font-size: 26px; }
+            .phi-grid { grid-template-columns: 1fr 1fr; }
+            .nav-buttons { flex-direction: column; gap: 15px; }
+            .nav-buttons .btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <div class="logo">MEDSTATION</div>
+                <div class="tagline">Cuidado com Propósito</div>
+            </div>
+            <div class="module-badge">⚠️ REQUIRED: 80% Pass Gate</div>
+        </div>
+    </header>
+    
+    <div class="pass-gate-banner">
+        🔒 This is a REQUIRED compliance module. You must score <span>80% or higher</span> (8/10 questions) to proceed.
+    </div>
+    
+    <div class="progress-container">
+        <div class="progress-inner">
+            <div class="progress-label">
+                <span>Module Progress</span>
+                <span id="progress-text">0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="container">
+        <div class="module-header">
+            <div class="module-number">F4</div>
+            <h1>HIPAA & Compliance</h1>
+            <p class="duration">Estimated Time: <span>60-75 minutes</span></p>
+        </div>
+        
+        <div class="critical-notice">
+            <h3>⚠️ CRITICAL COMPLIANCE MODULE</h3>
+            <p>HIPAA compliance is non-negotiable in healthcare. Every Medstation team member must understand and follow these requirements. <strong>You must pass this quiz with 80% or higher to continue.</strong></p>
+        </div>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>By the end of this module, you will be able to:</p>
+            <ul>
+                <li>Explain the purpose and scope of HIPAA regulations</li>
+                <li>Identify all 18 types of Protected Health Information (PHI)</li>
+                <li>Distinguish between permitted and prohibited uses of PHI</li>
+                <li>Recognize common HIPAA violations and their consequences</li>
+                <li>Apply HIPAA principles to everyday workplace situations</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="section-1">
+            <h2>1. What is HIPAA?</h2>
+            
+            <p>The <strong>Health Insurance Portability and Accountability Act (HIPAA)</strong> was enacted in 1996 to protect sensitive patient health information from being disclosed without the patient's consent or knowledge.</p>
+            
+            <h3>HIPAA's Three Main Rules</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rule</th>
+                            <th>Purpose</th>
+                            <th>Key Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Privacy Rule</strong></td>
+                            <td>Protects PHI in any form</td>
+                            <td>Limits use/disclosure, patient rights, minimum necessary standard</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security Rule</strong></td>
+                            <td>Protects electronic PHI (ePHI)</td>
+                            <td>Administrative, physical, and technical safeguards</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Breach Notification Rule</strong></td>
+                            <td>Requires disclosure of breaches</td>
+                            <td>Notify patients, HHS, and media (if large breach)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept</div>
+                <p><strong>Who Must Comply?</strong> HIPAA applies to "covered entities" (healthcare providers, health plans, healthcare clearinghouses) and their "business associates" (vendors who handle PHI). Medstation is a covered entity, and all team members must comply.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-2">
+            <h2>2. The 18 PHI Identifiers</h2>
+            
+            <p>Protected Health Information (PHI) is any health information that can be linked to a specific individual. HIPAA defines <strong>18 specific identifiers</strong> that make health information "protected." You must know these.</p>
+            
+            <div class="phi-grid">
+                <div class="phi-item"><span class="phi-number">1</span><div class="phi-name">Name</div></div>
+                <div class="phi-item"><span class="phi-number">2</span><div class="phi-name">Address</div>(street, city, ZIP)</div>
+                <div class="phi-item"><span class="phi-number">3</span><div class="phi-name">Dates</div>(DOB, admission, discharge, death)</div>
+                <div class="phi-item"><span class="phi-number">4</span><div class="phi-name">Phone Numbers</div></div>
+                <div class="phi-item"><span class="phi-number">5</span><div class="phi-name">Fax Numbers</div></div>
+                <div class="phi-item"><span class="phi-number">6</span><div class="phi-name">Email Addresses</div></div>
+                <div class="phi-item"><span class="phi-number">7</span><div class="phi-name">SSN</div>(Social Security Number)</div>
+                <div class="phi-item"><span class="phi-number">8</span><div class="phi-name">Medical Record Numbers</div></div>
+                <div class="phi-item"><span class="phi-number">9</span><div class="phi-name">Health Plan ID Numbers</div></div>
+                <div class="phi-item"><span class="phi-number">10</span><div class="phi-name">Account Numbers</div></div>
+                <div class="phi-item"><span class="phi-number">11</span><div class="phi-name">Certificate/License Numbers</div></div>
+                <div class="phi-item"><span class="phi-number">12</span><div class="phi-name">Vehicle IDs & Plates</div></div>
+                <div class="phi-item"><span class="phi-number">13</span><div class="phi-name">Device IDs & Serial Numbers</div></div>
+                <div class="phi-item"><span class="phi-number">14</span><div class="phi-name">Web URLs</div></div>
+                <div class="phi-item"><span class="phi-number">15</span><div class="phi-name">IP Addresses</div></div>
+                <div class="phi-item"><span class="phi-number">16</span><div class="phi-name">Biometric IDs</div>(fingerprints, voice)</div>
+                <div class="phi-item"><span class="phi-number">17</span><div class="phi-name">Full-Face Photos</div></div>
+                <div class="phi-item"><span class="phi-number">18</span><div class="phi-name">Any Unique Identifier</div></div>
+            </div>
+            
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Important</div>
+                <p>PHI includes ANY health information combined with ANY of these 18 identifiers. A diagnosis alone isn't PHI, but "John Smith has diabetes" is PHI because it links health information to a name.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-3">
+            <h2>3. Permitted Uses & Disclosures</h2>
+            
+            <p>HIPAA doesn't prohibit all sharing of PHI—it controls <em>how</em> PHI can be used and disclosed. Understanding permitted uses is essential.</p>
+            
+            <h3>PHI May Be Used/Disclosed For:</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Purpose</th>
+                            <th>Example</th>
+                            <th>Authorization Required?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Treatment</strong></td>
+                            <td>Sharing records with specialist for referral</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payment</strong></td>
+                            <td>Submitting claim to insurance company</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Healthcare Operations</strong></td>
+                            <td>Quality improvement, training, audits</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>With Patient Authorization</strong></td>
+                            <td>Releasing records to employer, attorney</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Public Health Activities</strong></td>
+                            <td>Reporting communicable diseases</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Legal Requirements</strong></td>
+                            <td>Court orders, subpoenas</td>
+                            <td>No (if properly ordered)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept: Minimum Necessary Standard</div>
+                <p>When using or disclosing PHI, you must limit the information to the <strong>minimum necessary</strong> to accomplish the purpose. Don't share an entire medical record when only the diagnosis is needed for billing.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-4">
+            <h2>4. Common HIPAA Violations</h2>
+            
+            <p>HIPAA violations can result in serious consequences—fines ranging from $100 to $1.5 million per violation category per year, plus potential criminal charges. Learn to recognize and avoid these common violations.</p>
+            
+            <div class="violation-box">
+                <div class="violation-title">🚫 Common Violations to Avoid</div>
+                <ul>
+                    <li><strong>Discussing patients in public areas:</strong> Elevators, cafeterias, hallways where others can hear</li>
+                    <li><strong>Leaving PHI visible:</strong> Computer screens, papers on desks, faxes in open trays</li>
+                    <li><strong>Unauthorized access:</strong> Looking up records of friends, family, celebrities, or coworkers</li>
+                    <li><strong>Improper disposal:</strong> Throwing PHI in regular trash instead of shredding</li>
+                    <li><strong>Sharing login credentials:</strong> Letting others use your EHR access</li>
+                    <li><strong>Texting PHI:</strong> Using unsecured personal phones to share patient information</li>
+                    <li><strong>Social media posts:</strong> Any reference to specific patients, even without names</li>
+                    <li><strong>Lost/stolen devices:</strong> Unencrypted laptops, phones, USB drives with PHI</li>
+                </ul>
+            </div>
+            
+            <h3>HIPAA Penalty Tiers</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tier</th>
+                            <th>Violation Type</th>
+                            <th>Penalty Range</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tier 1</strong></td>
+                            <td>Unknowing (didn't know)</td>
+                            <td>$100 - $50,000 per violation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tier 2</strong></td>
+                            <td>Reasonable cause (should have known)</td>
+                            <td>$1,000 - $50,000 per violation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tier 3</strong></td>
+                            <td>Willful neglect, corrected</td>
+                            <td>$10,000 - $50,000 per violation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tier 4</strong></td>
+                            <td>Willful neglect, not corrected</td>
+                            <td>$50,000+ per violation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Criminal Penalties</div>
+                <p>Knowingly obtaining or disclosing PHI can result in criminal charges: up to 1 year in prison for basic violations, up to 5 years for false pretenses, and up to 10 years for commercial advantage or malicious harm.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-5">
+            <h2>5. Compliant Communication Channels</h2>
+            
+            <p>Not all communication methods are appropriate for PHI. Use only approved, secure channels.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>OK for PHI?</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>NextGen EHR messaging</strong></td>
+                            <td style="color: var(--success);">✓ Yes</td>
+                            <td>Encrypted, audit trail</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Secure patient portal</strong></td>
+                            <td style="color: var(--success);">✓ Yes</td>
+                            <td>Encrypted, patient-initiated</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Work phone (verbal)</strong></td>
+                            <td style="color: var(--success);">✓ Yes</td>
+                            <td>Verify identity, private location</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Encrypted email (work)</strong></td>
+                            <td style="color: var(--success);">✓ Yes</td>
+                            <td>Only if encrypted end-to-end</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personal text/SMS</strong></td>
+                            <td style="color: var(--error);">✗ No</td>
+                            <td>Not encrypted</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personal email</strong></td>
+                            <td style="color: var(--error);">✗ No</td>
+                            <td>Not secure</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Social media (any)</strong></td>
+                            <td style="color: var(--error);">✗ No</td>
+                            <td>Never, even in private messages</td>
+                        </tr>
+                        <tr>
+                            <td><strong>WhatsApp/iMessage</strong></td>
+                            <td style="color: var(--error);">✗ No</td>
+                            <td>Not approved for PHI</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="section" id="section-6">
+            <h2>6. What To Do If You Suspect a Breach</h2>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">📋 Breach Response Steps</div>
+                <ol>
+                    <li><strong>Stop the breach</strong> if possible (log out, secure documents)</li>
+                    <li><strong>Report immediately</strong> to your supervisor or Privacy Officer</li>
+                    <li><strong>Document</strong> what happened, when, and what PHI was involved</li>
+                    <li><strong>Don't discuss</strong> the breach with anyone except those investigating</li>
+                    <li><strong>Cooperate fully</strong> with the investigation</li>
+                </ol>
+            </div>
+            
+            <p>Early reporting minimizes harm and demonstrates good faith. <strong>Never try to hide or cover up a potential breach.</strong></p>
+        </div>
+        
+        <div class="section" id="section-7">
+            <h2>7. Key Takeaways</h2>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">📋 Summary</div>
+                <ul>
+                    <li><strong>HIPAA protects PHI</strong> through Privacy, Security, and Breach Notification Rules.</li>
+                    <li><strong>PHI = health info + any of 18 identifiers</strong> (name, DOB, SSN, MRN, etc.).</li>
+                    <li><strong>TPO (Treatment, Payment, Operations)</strong> doesn't require patient authorization.</li>
+                    <li><strong>Minimum necessary:</strong> Share only what's needed for the purpose.</li>
+                    <li><strong>Use only approved channels</strong> for PHI (EHR, secure portal, encrypted systems).</li>
+                    <li><strong>Report breaches immediately</strong>—early reporting reduces penalties.</li>
+                    <li><strong>Violations have serious consequences</strong>—fines up to $1.5M+ and criminal charges.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quiz-section">
+            <h2>📝 HIPAA Compliance Quiz</h2>
+            <div class="pass-requirement">
+                🔒 PASS REQUIREMENT: You must score 80% or higher (8/10 correct) to proceed to the next module.
+            </div>
+            
+            <div class="question" id="q1">
+                <div class="question-text"><span class="question-number">1</span>Which of the following is NOT one of HIPAA's main rules?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q1" value="a">Privacy Rule</label>
+                    <label class="option" data-value="b"><input type="radio" name="q1" value="b">Security Rule</label>
+                    <label class="option" data-value="c"><input type="radio" name="q1" value="c">Payment Rule</label>
+                    <label class="option" data-value="d"><input type="radio" name="q1" value="d">Breach Notification Rule</label>
+                </div>
+                <div class="feedback" id="feedback-q1"></div>
+            </div>
+            
+            <div class="question" id="q2">
+                <div class="question-text"><span class="question-number">2</span>How many PHI identifiers does HIPAA define?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q2" value="a">10</label>
+                    <label class="option" data-value="b"><input type="radio" name="q2" value="b">15</label>
+                    <label class="option" data-value="c"><input type="radio" name="q2" value="c">18</label>
+                    <label class="option" data-value="d"><input type="radio" name="q2" value="d">21</label>
+                </div>
+                <div class="feedback" id="feedback-q2"></div>
+            </div>
+            
+            <div class="question" id="q3">
+                <div class="question-text"><span class="question-number">3</span>Which of the following IS a PHI identifier?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q3" value="a">Blood type</label>
+                    <label class="option" data-value="b"><input type="radio" name="q3" value="b">Medical diagnosis</label>
+                    <label class="option" data-value="c"><input type="radio" name="q3" value="c">Email address</label>
+                    <label class="option" data-value="d"><input type="radio" name="q3" value="d">Medication name</label>
+                </div>
+                <div class="feedback" id="feedback-q3"></div>
+            </div>
+            
+            <div class="question" id="q4">
+                <div class="question-text"><span class="question-number">4</span>A nurse shares a patient's record with a specialist for a referral. Does this require patient authorization?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q4" value="a">Yes, always</label>
+                    <label class="option" data-value="b"><input type="radio" name="q4" value="b">No, because it's for Treatment</label>
+                    <label class="option" data-value="c"><input type="radio" name="q4" value="c">Only if the patient is a minor</label>
+                    <label class="option" data-value="d"><input type="radio" name="q4" value="d">Only if the specialist is out-of-network</label>
+                </div>
+                <div class="feedback" id="feedback-q4"></div>
+            </div>
+            
+            <div class="question" id="q5">
+                <div class="question-text"><span class="question-number">5</span>What does the "minimum necessary" standard require?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q5" value="a">Share the least amount of PHI needed to accomplish the purpose</label>
+                    <label class="option" data-value="b"><input type="radio" name="q5" value="b">Always share the complete medical record</label>
+                    <label class="option" data-value="c"><input type="radio" name="q5" value="c">Wait at least 24 hours before sharing PHI</label>
+                    <label class="option" data-value="d"><input type="radio" name="q5" value="d">Use only paper records, never electronic</label>
+                </div>
+                <div class="feedback" id="feedback-q5"></div>
+            </div>
+            
+            <div class="question" id="q6">
+                <div class="question-text"><span class="question-number">6</span>Which communication channel is APPROVED for sharing PHI?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q6" value="a">Personal text messages</label>
+                    <label class="option" data-value="b"><input type="radio" name="q6" value="b">WhatsApp</label>
+                    <label class="option" data-value="c"><input type="radio" name="q6" value="c">Secure patient portal</label>
+                    <label class="option" data-value="d"><input type="radio" name="q6" value="d">Facebook Messenger</label>
+                </div>
+                <div class="feedback" id="feedback-q6"></div>
+            </div>
+            
+            <div class="question" id="q7">
+                <div class="question-text"><span class="question-number">7</span>A staff member looks up their neighbor's medical record out of curiosity. This is:</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q7" value="a">Permitted under Healthcare Operations</label>
+                    <label class="option" data-value="b"><input type="radio" name="q7" value="b">A HIPAA violation (unauthorized access)</label>
+                    <label class="option" data-value="c"><input type="radio" name="q7" value="c">Allowed if no information is shared</label>
+                    <label class="option" data-value="d"><input type="radio" name="q7" value="d">Fine as long as the neighbor doesn't know</label>
+                </div>
+                <div class="feedback" id="feedback-q7"></div>
+            </div>
+            
+            <div class="question" id="q8">
+                <div class="question-text"><span class="question-number">8</span>What is the FIRST thing you should do if you suspect a PHI breach?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q8" value="a">Tell your coworkers</label>
+                    <label class="option" data-value="b"><input type="radio" name="q8" value="b">Wait to see if anyone notices</label>
+                    <label class="option" data-value="c"><input type="radio" name="q8" value="c">Report immediately to supervisor/Privacy Officer</label>
+                    <label class="option" data-value="d"><input type="radio" name="q8" value="d">Post about it on social media to warn others</label>
+                </div>
+                <div class="feedback" id="feedback-q8"></div>
+            </div>
+            
+            <div class="question" id="q9">
+                <div class="question-text"><span class="question-number">9</span>Which scenario is a HIPAA violation?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q9" value="a">Discussing a patient's care with their specialist</label>
+                    <label class="option" data-value="b"><input type="radio" name="q9" value="b">Submitting a claim to insurance with diagnosis codes</label>
+                    <label class="option" data-value="c"><input type="radio" name="q9" value="c">Discussing a patient's condition in a crowded elevator</label>
+                    <label class="option" data-value="d"><input type="radio" name="q9" value="d">Reporting a communicable disease to public health</label>
+                </div>
+                <div class="feedback" id="feedback-q9"></div>
+            </div>
+            
+            <div class="question" id="q10">
+                <div class="question-text"><span class="question-number">10</span>What is the maximum civil penalty for willful neglect of HIPAA that is not corrected?</div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q10" value="a">$100 per violation</label>
+                    <label class="option" data-value="b"><input type="radio" name="q10" value="b">$1,000 per violation</label>
+                    <label class="option" data-value="c"><input type="radio" name="q10" value="c">$50,000 or more per violation</label>
+                    <label class="option" data-value="d"><input type="radio" name="q10" value="d">No penalty if you apologize</label>
+                </div>
+                <div class="feedback" id="feedback-q10"></div>
+            </div>
+            
+            <div class="quiz-controls">
+                <button class="btn btn-primary" id="submit-quiz" onclick="submitQuiz()">Submit Answers</button>
+            </div>
+            
+            <div class="results" id="results">
+                <div class="score-circle" id="score-circle">
+                    <span id="score-number">0</span>
+                    <span class="score-label">out of 10</span>
+                </div>
+                <p class="results-message" id="results-message"></p>
+                <button class="btn btn-success" id="continue-btn" onclick="completeModule()" style="display: none;">Continue to Module F5 →</button>
+                <button class="btn btn-error" id="retry-btn" onclick="retryQuiz()" style="display: none;">Review & Try Again</button>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="F3_healthcare_business.html" class="btn btn-primary">← Previous: Healthcare Business</a>
+            <a href="F5_healthcare_delivery.html" class="btn btn-primary" id="next-module" style="display: none;">Next: Healthcare Delivery →</a>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p><strong>Medstation Healthcare Learning Fellowship</strong></p>
+        <p>Module F4: HIPAA & Compliance</p>
+        <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">© 2026 Medstation. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        const answers = {
+            q1: { correct: 'c', feedback: 'Correct! HIPAA\'s three main rules are Privacy, Security, and Breach Notification. There is no "Payment Rule."' },
+            q2: { correct: 'c', feedback: 'Correct! HIPAA defines 18 specific PHI identifiers that can identify an individual.' },
+            q3: { correct: 'c', feedback: 'Correct! Email address is one of the 18 PHI identifiers. Blood type, diagnosis, and medication names are health information but not identifiers by themselves.' },
+            q4: { correct: 'b', feedback: 'Correct! Sharing for Treatment purposes (TPO) does not require patient authorization under HIPAA.' },
+            q5: { correct: 'a', feedback: 'Correct! The minimum necessary standard requires sharing only the PHI needed to accomplish the specific purpose.' },
+            q6: { correct: 'c', feedback: 'Correct! Secure patient portals are encrypted and approved for PHI. Personal texts, WhatsApp, and social media are NOT approved.' },
+            q7: { correct: 'b', feedback: 'Correct! Accessing records without a treatment, payment, or operations reason is unauthorized access—a serious HIPAA violation.' },
+            q8: { correct: 'c', feedback: 'Correct! Report suspected breaches immediately to your supervisor or Privacy Officer. Early reporting minimizes harm.' },
+            q9: { correct: 'c', feedback: 'Correct! Discussing patient information in public areas (elevators, cafeterias) where others can overhear is a HIPAA violation.' },
+            q10: { correct: 'c', feedback: 'Correct! Tier 4 violations (willful neglect not corrected) can result in penalties of $50,000 or more per violation.' }
+        };
+        
+        const wrongFeedback = {
+            q1: 'Incorrect. HIPAA has three main rules: Privacy Rule, Security Rule, and Breach Notification Rule. There is no "Payment Rule."',
+            q2: 'Incorrect. HIPAA defines exactly 18 PHI identifiers. Memorize them!',
+            q3: 'Incorrect. Email address is one of the 18 PHI identifiers. Blood type, diagnosis, and medications are health info, not identifiers.',
+            q4: 'Incorrect. Sharing for Treatment (the T in TPO) doesn\'t require authorization—it\'s a permitted use under HIPAA.',
+            q5: 'Incorrect. Minimum necessary means sharing only what\'s needed for the purpose—not the entire record.',
+            q6: 'Incorrect. Only secure, encrypted, approved systems (like patient portals, EHR) are approved for PHI.',
+            q7: 'Incorrect. Looking up records without a legitimate TPO reason is unauthorized access—a HIPAA violation regardless of intent.',
+            q8: 'Incorrect. Report immediately! Waiting or discussing with coworkers can worsen the breach.',
+            q9: 'Incorrect. Discussing patients in public areas is a violation. The other options are permitted uses.',
+            q10: 'Incorrect. Tier 4 (willful neglect not corrected) carries penalties of $50,000+ per violation.'
+        };
+        
+        let maxScroll = 0;
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrolled > maxScroll) {
+                maxScroll = scrolled;
+                const progress = Math.min(Math.round((maxScroll / totalHeight) * 70), 70);
+                updateProgress(progress);
+            }
+        });
+        
+        function updateProgress(percent) {
+            const fill = document.getElementById('progress-fill');
+            const text = document.getElementById('progress-text');
+            const currentWidth = parseInt(fill.style.width) || 0;
+            if (percent > currentWidth) {
+                fill.style.width = percent + '%';
+                text.textContent = percent + '% Complete';
+                localStorage.setItem('medstation_f4_progress', percent);
+            }
+        }
+        
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            
+            for (let i = 1; i <= 10; i++) {
+                const questionId = 'q' + i;
+                const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+                const feedbackEl = document.getElementById('feedback-' + questionId);
+                const options = document.querySelectorAll(`#${questionId} .option`);
+                
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect', 'selected'));
+                
+                if (!selected) {
+                    allAnswered = false;
+                    feedbackEl.textContent = 'Please select an answer.';
+                    feedbackEl.className = 'feedback show incorrect';
+                    continue;
+                }
+                
+                const userAnswer = selected.value;
+                const correctAnswer = answers[questionId].correct;
+                const selectedOption = selected.closest('.option');
+                
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    selectedOption.classList.add('correct');
+                    feedbackEl.textContent = answers[questionId].feedback;
+                    feedbackEl.className = 'feedback show correct';
+                } else {
+                    selectedOption.classList.add('incorrect');
+                    options.forEach(opt => {
+                        if (opt.dataset.value === correctAnswer) opt.classList.add('correct');
+                    });
+                    feedbackEl.textContent = wrongFeedback[questionId];
+                    feedbackEl.className = 'feedback show incorrect';
+                }
+            }
+            
+            if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+            
+            const resultsEl = document.getElementById('results');
+            const scoreCircle = document.getElementById('score-circle');
+            const scoreNumber = document.getElementById('score-number');
+            const resultsMessage = document.getElementById('results-message');
+            const continueBtn = document.getElementById('continue-btn');
+            const retryBtn = document.getElementById('retry-btn');
+            
+            scoreNumber.textContent = score;
+            resultsEl.classList.add('show');
+            
+            const passed = score >= 8; // 80% pass rate
+            
+            if (passed) {
+                scoreCircle.className = 'score-circle pass';
+                resultsMessage.textContent = '✅ PASSED! You scored ' + (score * 10) + '%. You may proceed to the next module.';
+                resultsMessage.style.color = 'var(--success)';
+                continueBtn.style.display = 'inline-block';
+                retryBtn.style.display = 'none';
+                updateProgress(100);
+                localStorage.setItem('medstation_f4_passed', 'true');
+            } else {
+                scoreCircle.className = 'score-circle fail';
+                resultsMessage.textContent = '❌ NOT PASSED. You scored ' + (score * 10) + '%. You need 80% (8/10) to proceed. Please review the material and try again.';
+                resultsMessage.style.color = 'var(--error)';
+                continueBtn.style.display = 'none';
+                retryBtn.style.display = 'inline-block';
+            }
+            
+            document.getElementById('submit-quiz').style.display = 'none';
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function retryQuiz() {
+            // Reset all answers
+            for (let i = 1; i <= 10; i++) {
+                const questionId = 'q' + i;
+                const options = document.querySelectorAll(`#${questionId} .option`);
+                const feedbackEl = document.getElementById('feedback-' + questionId);
+                const radios = document.querySelectorAll(`input[name="${questionId}"]`);
+                
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect', 'selected'));
+                radios.forEach(radio => radio.checked = false);
+                feedbackEl.className = 'feedback';
+            }
+            
+            document.getElementById('results').classList.remove('show');
+            document.getElementById('submit-quiz').style.display = 'inline-block';
+            window.scrollTo({ top: document.getElementById('quiz-section').offsetTop - 100, behavior: 'smooth' });
+        }
+        
+        function completeModule() {
+            localStorage.setItem('medstation_f4_complete', 'true');
+            localStorage.setItem('medstation_f4_progress', '100');
+            document.getElementById('next-module').style.display = 'inline-block';
+            window.location.href = 'F5_healthcare_delivery.html';
+        }
+        
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionDiv = this.closest('.question');
+                questionDiv.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+            });
+        });
+        
+        window.addEventListener('load', function() {
+            const savedProgress = localStorage.getItem('medstation_f4_progress');
+            if (savedProgress) updateProgress(parseInt(savedProgress));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medstation Healthcare Learning Fellowship 2026</title>
+    <style>
+        :root {
+            --primary: #1B4F72;
+            --secondary: #2874A6;
+            --light-blue: #EBF5FB;
+            --light-green: #D5F5E3;
+            --accent: #27AE60;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .header .tagline {
+            font-size: 18px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .header .subtitle {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: normal;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-box {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+        
+        .welcome-box h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .welcome-box p {
+            line-height: 1.7;
+            color: #555;
+        }
+        
+        .progress-overview {
+            background: var(--light-green);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .progress-text {
+            font-size: 18px;
+            color: var(--primary);
+        }
+        
+        .progress-bar-container {
+            flex: 1;
+            max-width: 400px;
+            min-width: 200px;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #2ECC71);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-count {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--light-blue);
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .module-header {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .module-number {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .module-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .module-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .status-complete {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .status-incomplete {
+            background: #ddd;
+            color: #999;
+        }
+        
+        .module-body {
+            padding: 20px;
+        }
+        
+        .module-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .module-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .module-required {
+            background: #FADBD8;
+            color: #C0392B;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .resources-section {
+            margin-bottom: 50px;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .resource-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        
+        .resource-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .resource-desc {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        
+        .footer p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 { font-size: 28px; }
+            .modules-grid { grid-template-columns: 1fr; }
+            .progress-overview { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MEDSTATION</h1>
+        <div class="tagline">Cuidado com Propósito</div>
+        <div class="subtitle">Healthcare Learning Fellowship 2026</div>
+    </div>
+    
+    <div class="container">
+        <div class="welcome-box">
+            <h2>Welcome, Fellow! 👋</h2>
+            <p>This learning experience will introduce you to U.S. healthcare operations through interactive modules and hands-on projects. Complete the foundation modules below, then work with your mentor on your assigned project. Remember: the primary purpose is your learning—focus on understanding deeply and asking great questions.</p>
+        </div>
+        
+        <div class="progress-overview">
+            <div class="progress-text">
+                <strong>Your Progress</strong>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="progress-count"><span id="completedCount">0</span> of 6 modules completed</div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">📚 Foundation Modules</h2>
+        <div class="modules-grid">
+            <a href="F1_healthcare_organizations.html" class="module-card" data-module="F1">
+                <div class="module-header">
+                    <div class="module-number">Module F1</div>
+                    <div class="module-title">Healthcare Organizations</div>
+                    <div class="module-status status-incomplete" id="status-F1">○</div>
+                </div>
+                <div class="module-body">
+                    <div class="module-description">Learn about healthcare delivery systems, organizational structures, and where Medstation fits in the industry landscape.</div>
+                    <div class="module-meta">
+                        <span>⏱️ ~45 min</span>
+                        <span>📝 Quiz included</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="F2_healthcare_markets.html" class="module-card" data-module="F2">
+                <div class="module-header">
+                    <div class="module-number">Module F2</div>
+                    <div class="module-title">Healthcare Markets</div>
+                    <div class="module-status status-incomplete" id="status-F2">○</div>
+                </div>
+                <div class="module-body">
+                    <div class="module-description">Understand payers, patients, and market dynamics. Learn how healthcare organizations compete and grow.</div>
+                    <div class="module-meta">
+                        <span>⏱️ ~45 min</span>
+                        <span>📝 Quiz included</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="F3_healthcare_business.html" class="module-card" data-module="F3">
+                <div class="module-header">
+                    <div class="module-number">Module F3</div>
+                    <div class="module-title">Healthcare Business</div>
+                    <div class="module-status status-incomplete" id="status-F3">○</div>
+                </div>
+                <div class="module-body">
+                    <div class="module-description">Master the revenue cycle, reimbursement models, and financial fundamentals of healthcare organizations.</div>
+                    <div class="module-meta">
+                        <span>⏱️ ~60 min</span>
+                        <span>📝 Quiz included</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="F4_hipaa_compliance.html" class="module-card" data-module="F4">
+                <div class="module-header" style="background: #922B21;">
+                    <div class="module-number">Module F4</div>
+                    <div class="module-title">HIPAA & Compliance</div>
+                    <div class="module-status status-incomplete" id="status-F4">○</div>
+                </div>
+                <div class="module-body">
+                    <div class="module-description">Critical training on patient privacy, data security, and your compliance responsibilities.</div>
+                    <div class="module-meta">
+                        <span>⏱️ ~45 min</span>
+                        <span class="module-required">80% REQUIRED</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="F5_healthcare_delivery.html" class="module-card" data-module="F5">
+                <div class="module-header">
+                    <div class="module-number">Module F5</div>
+                    <div class="module-title">Healthcare Delivery</div>
+                    <div class="module-status status-incomplete" id="status-F5">○</div>
+                </div>
+                <div class="module-body">
+                    <div class="module-description">Explore care models, patient journeys, and the operational metrics that drive quality healthcare.</div>
+                    <div class="module-meta">
+                        <span>⏱️ ~45 min</span>
+                        <span>📝 Quiz included</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="F6_professional_skills.html" class="module-card" data-module="F6">
+                <div class="module-header">
+                    <div class="module-number">Module F6</div>
+                    <div class="module-title">Professional Skills</div>
+                    <div class="module-status status-incomplete" id="status-F6">○</div>
+                </div>
+                <div class="module-body">
+                    <div class="module-description">Develop communication, documentation, and presentation skills essential for healthcare professionals.</div>
+                    <div class="module-meta">
+                        <span>⏱️ ~40 min</span>
+                        <span>📝 Quiz included</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <h2 class="section-title">🛠️ Resources</h2>
+        <div class="resources-grid">
+            <a href="Evaluation_Rubric.html" class="resource-card">
+                <div class="resource-icon">📋</div>
+                <div class="resource-title">Evaluation Rubric</div>
+                <div class="resource-desc">See how your performance will be assessed</div>
+            </a>
+            <a href="Certificate_Template.html" class="resource-card">
+                <div class="resource-icon">🏆</div>
+                <div class="resource-title">Certificate Preview</div>
+                <div class="resource-desc">View completion certificate template</div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>Medstation Healthcare Learning Fellowship 2026</p>
+        <p style="margin-top: 10px; font-size: 12px;">Questions? Contact fellowship@medstation.com</p>
+    </div>
+    
+    <script>
+        // Check completion status from localStorage
+        function updateProgress() {
+            const modules = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6'];
+            let completed = 0;
+            
+            modules.forEach(mod => {
+                const key = `medstation_${mod.toLowerCase()}_completed`;
+                const isComplete = localStorage.getItem(key) === 'true';
+                const statusEl = document.getElementById(`status-${mod}`);
+                
+                if (isComplete) {
+                    completed++;
+                    if (statusEl) {
+                        statusEl.textContent = '✓';
+                        statusEl.classList.remove('status-incomplete');
+                        statusEl.classList.add('status-complete');
+                    }
+                }
+            });
+            
+            // Update progress bar
+            const percent = (completed / 6) * 100;
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('completedCount').textContent = completed;
+        }
+        
+        // Run on page load
+        updateProgress();
+        
+        // Also check when returning to page
+        window.addEventListener('focus', updateProgress);
+    </script>
+</body>
+</html>

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F2: Healthcare Markets | Medstation Fellowship</title>
+    <style>
+        :root {
+            --primary-dark: #1B4F72;
+            --primary-medium: #2874A6;
+            --primary-light: #EBF5FB;
+            --accent-green: #D5F5E3;
+            --accent-yellow: #FCF3CF;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --text-light: #7F8C8D;
+            --border: #CCCCCC;
+            --white: #FFFFFF;
+            --success: #27AE60;
+            --error: #E74C3C;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            color: var(--white);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .tagline { font-size: 12px; opacity: 0.9; font-style: italic; }
+        
+        .module-badge {
+            background: var(--accent-green);
+            color: var(--primary-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .progress-container {
+            background: var(--primary-light);
+            padding: 15px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .progress-inner { max-width: 1000px; margin: 0 auto; }
+        
+        .progress-label {
+            font-size: 14px;
+            color: var(--text-medium);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .progress-bar {
+            background: var(--border);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary-medium), var(--success));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        
+        .module-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        .module-number {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        h1 { font-size: 32px; color: var(--primary-dark); margin-bottom: 10px; }
+        
+        .duration { color: var(--text-medium); font-size: 14px; }
+        .duration span { background: var(--accent-yellow); padding: 4px 12px; border-radius: 12px; margin-left: 5px; }
+        
+        .objectives {
+            background: var(--accent-green);
+            border-left: 4px solid var(--success);
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .objectives h2 {
+            color: var(--primary-dark);
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .objectives ul { margin-left: 25px; }
+        .objectives li { margin-bottom: 8px; color: var(--text-dark); }
+        
+        .section { margin-bottom: 40px; }
+        
+        h2 {
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        h3 { font-size: 20px; color: var(--primary-medium); margin: 25px 0 15px 0; }
+        p { margin-bottom: 15px; }
+        ul, ol { margin-left: 25px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        
+        .key-concept {
+            background: var(--primary-light);
+            border: 1px solid var(--primary-medium);
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+        
+        .key-concept-title {
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 15px; }
+        
+        th {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); }
+        tr:nth-child(even) { background: var(--primary-light); }
+        tr:hover { background: var(--accent-green); }
+        
+        .callout {
+            background: var(--accent-yellow);
+            border-left: 4px solid #F39C12;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .callout-title { font-weight: bold; color: var(--text-dark); margin-bottom: 8px; }
+        
+        /* Blue Ocean Visual */
+        .ocean-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .ocean-box {
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .red-ocean {
+            background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+            color: white;
+        }
+        
+        .blue-ocean {
+            background: linear-gradient(135deg, var(--primary-medium) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+        
+        .ocean-box h4 { font-size: 18px; margin-bottom: 15px; }
+        .ocean-box ul { list-style: none; margin: 0; padding: 0; text-align: left; }
+        .ocean-box li { margin-bottom: 8px; padding-left: 20px; position: relative; }
+        .ocean-box li::before { content: "•"; position: absolute; left: 0; }
+        
+        /* Quiz Styles */
+        .quiz-section {
+            background: var(--primary-light);
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 50px;
+        }
+        
+        .quiz-section h2 { text-align: center; border-bottom: none; margin-bottom: 30px; }
+        
+        .question {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .question-text { font-weight: bold; margin-bottom: 15px; color: var(--text-dark); }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover { border-color: var(--primary-medium); background: var(--primary-light); }
+        .option.selected { border-color: var(--primary-dark); background: var(--primary-light); }
+        .option.correct { border-color: var(--success); background: var(--accent-green); }
+        .option.incorrect { border-color: var(--error); background: #FADBD8; }
+        .option input { margin-right: 12px; transform: scale(1.2); }
+        
+        .feedback { margin-top: 15px; padding: 12px 15px; border-radius: 6px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: var(--accent-green); color: var(--primary-dark); }
+        .feedback.incorrect { background: #FADBD8; color: var(--error); }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-primary { background: var(--primary-dark); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-medium); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(27, 79, 114, 0.3); }
+        .btn-success { background: var(--success); color: var(--white); }
+        .btn-success:hover { background: #219A52; }
+        
+        .quiz-controls { text-align: center; margin-top: 30px; }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .results.show { display: block; }
+        
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .score-label { font-size: 12px; font-weight: normal; opacity: 0.9; }
+        .results-message { font-size: 18px; margin-bottom: 20px; }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--primary-light);
+        }
+        
+        .footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; }
+            .header-content { flex-direction: column; text-align: center; }
+            .container { padding: 25px 15px; }
+            h1 { font-size: 26px; }
+            h2 { font-size: 22px; }
+            .quiz-section { padding: 25px 15px; }
+            .ocean-comparison { grid-template-columns: 1fr; }
+            .nav-buttons { flex-direction: column; gap: 15px; }
+            .nav-buttons .btn { width: 100%; text-align: center; }
+        }
+        
+        @media print {
+            .header, .progress-container, .quiz-section, .nav-buttons, .footer { display: none; }
+            .container { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <div class="logo">MEDSTATION</div>
+                <div class="tagline">Cuidado com Propósito</div>
+            </div>
+            <div class="module-badge">Foundation Module 2 of 6</div>
+        </div>
+    </header>
+    
+    <div class="progress-container">
+        <div class="progress-inner">
+            <div class="progress-label">
+                <span>Module Progress</span>
+                <span id="progress-text">0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="container">
+        <div class="module-header">
+            <div class="module-number">F2</div>
+            <h1>Healthcare Markets</h1>
+            <p class="duration">Estimated Time: <span>45-60 minutes</span></p>
+        </div>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>By the end of this module, you will be able to:</p>
+            <ul>
+                <li>Analyze competitive dynamics in healthcare markets</li>
+                <li>Apply the Blue Ocean Strategy framework to healthcare</li>
+                <li>Understand the unique characteristics of immigrant healthcare markets</li>
+                <li>Identify Medstation's competitive positioning and value proposition</li>
+                <li>Recognize market opportunities in underserved communities</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="section-1">
+            <h2>1. Healthcare Market Fundamentals</h2>
+            
+            <p>Healthcare markets differ significantly from typical consumer markets due to information asymmetry, third-party payment, regulatory complexity, and the essential nature of healthcare services. Understanding these dynamics is critical for anyone working in healthcare operations.</p>
+            
+            <h3>Unique Characteristics of Healthcare Markets</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Characteristic</th>
+                            <th>Impact on Competition</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Information Asymmetry</strong></td>
+                            <td>Patients rely heavily on providers for guidance; trust is essential</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Third-Party Payment</strong></td>
+                            <td>Insurance buffers price sensitivity; network inclusion matters</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Regulatory Barriers</strong></td>
+                            <td>Licensing, credentialing, and compliance create entry barriers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geographic Constraints</strong></td>
+                            <td>Healthcare is local; patients seek convenient access</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Relationship Dependency</strong></td>
+                            <td>Provider-patient relationships drive loyalty and retention</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept</div>
+                <p><strong>Healthcare as a "Credence Good":</strong> Unlike most products where quality is observable before or after purchase, healthcare quality is often difficult for patients to evaluate. This makes trust, reputation, and relationship-building more important than in typical markets.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-2">
+            <h2>2. Blue Ocean Strategy in Healthcare</h2>
+            
+            <p>Blue Ocean Strategy, developed by W. Chan Kim and Renée Mauborgne, provides a framework for creating uncontested market space rather than competing head-to-head in crowded markets.</p>
+            
+            <div class="ocean-comparison">
+                <div class="ocean-box red-ocean">
+                    <h4>🔴 Red Ocean</h4>
+                    <ul>
+                        <li>Compete in existing market space</li>
+                        <li>Beat the competition</li>
+                        <li>Exploit existing demand</li>
+                        <li>Make value-cost trade-off</li>
+                        <li>Focus on rivals within industry</li>
+                    </ul>
+                </div>
+                <div class="ocean-box blue-ocean">
+                    <h4>🔵 Blue Ocean</h4>
+                    <ul>
+                        <li>Create uncontested market space</li>
+                        <li>Make competition irrelevant</li>
+                        <li>Create and capture new demand</li>
+                        <li>Break the value-cost trade-off</li>
+                        <li>Focus on non-customers</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Applying Blue Ocean to Healthcare</h3>
+            
+            <p>Healthcare organizations can create Blue Oceans by:</p>
+            
+            <ul>
+                <li><strong>Serving overlooked populations:</strong> Immigrant communities, rural areas, specific ethnic groups</li>
+                <li><strong>Redefining the care model:</strong> Telehealth, retail clinics, home-based care</li>
+                <li><strong>Eliminating unnecessary complexity:</strong> Streamlined processes, transparent pricing</li>
+                <li><strong>Adding non-traditional value:</strong> Cultural competency, language services, navigation support</li>
+            </ul>
+            
+            <div class="callout">
+                <div class="callout-title">🎯 Medstation's Blue Ocean</div>
+                <p>Rather than competing head-to-head with established health systems for mainstream patients, Medstation created a Blue Ocean by focusing on Brazilian/Brazilian-American communities—a population largely overlooked by traditional healthcare providers. This positioning provides: Portuguese-speaking staff, cultural familiarity, community trust, and reduced competition.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-3">
+            <h2>3. The Immigrant Healthcare Market</h2>
+            
+            <p>Immigrant populations represent a significant and often underserved segment of the U.S. healthcare market. Understanding their unique needs creates opportunities for organizations willing to invest in culturally competent care.</p>
+            
+            <h3>Barriers to Healthcare Access for Immigrants</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Barrier Type</th>
+                            <th>Description</th>
+                            <th>Strategic Response</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Language</strong></td>
+                            <td>Limited English proficiency creates communication gaps</td>
+                            <td>Native-language providers and staff</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cultural</strong></td>
+                            <td>Different health beliefs, expectations, communication styles</td>
+                            <td>Culturally competent training, community integration</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Systemic</strong></td>
+                            <td>Unfamiliarity with U.S. healthcare system navigation</td>
+                            <td>Patient navigation services, simplified processes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trust</strong></td>
+                            <td>Fear of discrimination, documentation concerns</td>
+                            <td>Community presence, welcoming environment, privacy assurance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Economic</strong></td>
+                            <td>Higher uninsured rates, limited financial resources</td>
+                            <td>Flexible payment options, insurance enrollment assistance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>The Brazilian-American Market in Florida</h3>
+            
+            <p>Florida's Brazilian-American community represents a distinct market segment with specific characteristics:</p>
+            
+            <ul>
+                <li><strong>Population:</strong> 300,000+ Brazilian-Americans in Florida, concentrated in South Florida</li>
+                <li><strong>Language:</strong> Portuguese-speaking (distinct from Spanish-speaking Latino populations)</li>
+                <li><strong>Healthcare expectations:</strong> Brazilian healthcare system familiarity (SUS, private insurance)</li>
+                <li><strong>Community networks:</strong> Strong informal networks, word-of-mouth influence</li>
+                <li><strong>Economic diversity:</strong> Range from new immigrants to established professionals</li>
+            </ul>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept</div>
+                <p><strong>Community Trust as Competitive Advantage:</strong> In immigrant communities, trust spreads through social networks. A positive experience at Medstation is shared among family and friends, creating organic growth that competitors cannot easily replicate. This "trust moat" is Medstation's most valuable competitive asset.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-4">
+            <h2>4. Medstation's Competitive Position</h2>
+            
+            <p>Understanding Medstation's market position helps contextualize fellowship projects and strategic decisions.</p>
+            
+            <h3>Competitive Landscape</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Competitor Type</th>
+                            <th>Examples</th>
+                            <th>Medstation Advantage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Large Health Systems</strong></td>
+                            <td>Baptist Health, Memorial Healthcare</td>
+                            <td>Cultural competency, community focus, agility</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Retail Clinics</strong></td>
+                            <td>CVS MinuteClinic, Walgreens</td>
+                            <td>Relationship continuity, comprehensive care</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Private Practices</strong></td>
+                            <td>Solo/small group practices</td>
+                            <td>Scale, technology infrastructure, extended hours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telehealth Platforms</strong></td>
+                            <td>Teladoc, Amwell</td>
+                            <td>Local presence, hybrid care, cultural alignment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FQHCs</strong></td>
+                            <td>Community health centers</td>
+                            <td>Operational flexibility, patient experience focus</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Medstation's Value Proposition</h3>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">🎯 Value Proposition</div>
+                <p><strong>For Brazilian and Brazilian-American families seeking healthcare:</strong> Medstation provides culturally aligned, Portuguese-speaking primary care that combines the accessibility of a community practice with the technology and resources of a modern healthcare network—making quality healthcare feel like home.</p>
+            </div>
+            
+            <h3>Strategic Growth Model</h3>
+            
+            <p>Medstation's expansion strategy reflects Blue Ocean principles:</p>
+            
+            <ol>
+                <li><strong>Premium Service Center Model:</strong> Asset-light clinics with standardized operations</li>
+                <li><strong>Hybrid Care Delivery:</strong> In-person + telehealth for accessibility</li>
+                <li><strong>Technology Enablement:</strong> NextGen EHR, Recura AI for patient engagement</li>
+                <li><strong>Community Integration:</strong> Deep roots in Brazilian-American networks</li>
+                <li><strong>Scalable Culture:</strong> Maintaining cultural competency as the network grows</li>
+            </ol>
+        </div>
+        
+        <div class="section" id="section-5">
+            <h2>5. Key Takeaways</h2>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">📋 Summary</div>
+                <ul>
+                    <li><strong>Healthcare markets have unique characteristics</strong> including information asymmetry, third-party payment, and relationship dependency.</li>
+                    <li><strong>Blue Ocean Strategy</strong> encourages creating uncontested market space rather than competing head-to-head in crowded markets.</li>
+                    <li><strong>Immigrant populations</strong> face distinct barriers (language, cultural, systemic, trust, economic) that create opportunities for specialized providers.</li>
+                    <li><strong>Medstation's Blue Ocean</strong> is the Brazilian-American community—a population underserved by traditional providers.</li>
+                    <li><strong>Community trust</strong> is Medstation's most valuable competitive asset and creates a sustainable competitive advantage.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quiz-section">
+            <h2>📝 Knowledge Check</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: var(--text-medium);">Test your understanding of healthcare markets. Answer all 6 questions to complete this module.</p>
+            
+            <div class="question" id="q1">
+                <div class="question-text">
+                    <span class="question-number">1</span>
+                    What makes healthcare a "credence good"?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q1" value="a">
+                        Healthcare services are typically free at point of service
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q1" value="b">
+                        Quality is difficult for patients to evaluate even after receiving care
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q1" value="c">
+                        Healthcare providers must be licensed by the government
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q1" value="d">
+                        Patients can easily compare prices across providers
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q1"></div>
+            </div>
+            
+            <div class="question" id="q2">
+                <div class="question-text">
+                    <span class="question-number">2</span>
+                    According to Blue Ocean Strategy, organizations should focus on:
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q2" value="a">
+                        Beating competitors with lower prices and better marketing
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q2" value="b">
+                        Creating uncontested market space and making competition irrelevant
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q2" value="c">
+                        Copying the strategies of successful competitors
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q2" value="d">
+                        Focusing exclusively on existing customers
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q2"></div>
+            </div>
+            
+            <div class="question" id="q3">
+                <div class="question-text">
+                    <span class="question-number">3</span>
+                    Which barrier to healthcare access is Medstation PRIMARILY addressing through its Portuguese-speaking staff?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q3" value="a">
+                        Economic barriers
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q3" value="b">
+                        Regulatory barriers
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q3" value="c">
+                        Language and cultural barriers
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q3" value="d">
+                        Geographic barriers
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q3"></div>
+            </div>
+            
+            <div class="question" id="q4">
+                <div class="question-text">
+                    <span class="question-number">4</span>
+                    What is described as Medstation's "most valuable competitive asset"?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q4" value="a">
+                        Low prices and discounts
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q4" value="b">
+                        Community trust within Brazilian-American networks
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q4" value="c">
+                        Large hospital facilities
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q4" value="d">
+                        Federal grant funding
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q4"></div>
+            </div>
+            
+            <div class="question" id="q5">
+                <div class="question-text">
+                    <span class="question-number">5</span>
+                    How does Medstation's "Premium Service Center" model support its growth strategy?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q5" value="a">
+                        By building large hospital facilities in each community
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q5" value="b">
+                        By eliminating all in-person care in favor of telehealth only
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q5" value="c">
+                        Through asset-light clinics with standardized operations
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q5" value="d">
+                        By acquiring competing health systems
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q5"></div>
+            </div>
+            
+            <div class="question" id="q6">
+                <div class="question-text">
+                    <span class="question-number">6</span>
+                    In healthcare markets, why is "word-of-mouth" particularly important for organizations serving immigrant communities?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q6" value="a">
+                        Immigrant communities don't have access to the internet
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q6" value="b">
+                        Strong informal networks mean positive experiences spread quickly through the community
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q6" value="c">
+                        Traditional advertising is illegal for healthcare providers
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q6" value="d">
+                        Immigrants prefer to choose providers randomly
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q6"></div>
+            </div>
+            
+            <div class="quiz-controls">
+                <button class="btn btn-primary" id="submit-quiz" onclick="submitQuiz()">Submit Answers</button>
+            </div>
+            
+            <div class="results" id="results">
+                <div class="score-circle">
+                    <span id="score-number">0</span>
+                    <span class="score-label">out of 6</span>
+                </div>
+                <p class="results-message" id="results-message"></p>
+                <button class="btn btn-success" id="continue-btn" onclick="completeModule()">Continue to Module F3 →</button>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="F1_healthcare_organizations.html" class="btn btn-primary">← Previous: Healthcare Organizations</a>
+            <a href="F3_healthcare_business.html" class="btn btn-primary" id="next-module" style="display: none;">Next: Healthcare Business →</a>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p><strong>Medstation Healthcare Learning Fellowship</strong></p>
+        <p>Module F2: Healthcare Markets</p>
+        <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">© 2026 Medstation. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        const answers = {
+            q1: { correct: 'b', feedback: 'Correct! Healthcare is a "credence good" because quality is difficult for patients to evaluate even after receiving care, making trust and reputation especially important.' },
+            q2: { correct: 'b', feedback: 'Correct! Blue Ocean Strategy focuses on creating uncontested market space and making competition irrelevant, rather than competing head-to-head in crowded markets.' },
+            q3: { correct: 'c', feedback: 'Correct! Portuguese-speaking staff directly addresses language and cultural barriers, enabling effective communication and building trust with Brazilian-American patients.' },
+            q4: { correct: 'b', feedback: 'Correct! Community trust within Brazilian-American networks is Medstation\'s most valuable competitive asset—it creates organic growth that competitors cannot easily replicate.' },
+            q5: { correct: 'c', feedback: 'Correct! The Premium Service Center model uses asset-light clinics with standardized operations, enabling efficient expansion while maintaining quality and cultural competency.' },
+            q6: { correct: 'b', feedback: 'Correct! Strong informal networks in immigrant communities mean positive (and negative) experiences spread quickly through word-of-mouth, making community trust especially valuable.' }
+        };
+        
+        const wrongFeedback = {
+            q1: 'Incorrect. A "credence good" is one where quality is difficult to evaluate even after use—making trust essential in healthcare.',
+            q2: 'Incorrect. Blue Ocean Strategy is about creating uncontested market space, not competing directly or copying competitors.',
+            q3: 'Incorrect. Portuguese-speaking staff primarily addresses language and cultural barriers for Brazilian-American patients.',
+            q4: 'Incorrect. Community trust is Medstation\'s most valuable asset—it creates sustainable competitive advantage through word-of-mouth.',
+            q5: 'Incorrect. The Premium Service Center model uses asset-light, standardized clinics to enable efficient expansion.',
+            q6: 'Incorrect. Word-of-mouth is powerful because strong informal networks in immigrant communities spread positive experiences quickly.'
+        };
+        
+        let maxScroll = 0;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            if (scrolled > maxScroll) {
+                maxScroll = scrolled;
+                const progress = Math.min(Math.round((maxScroll / totalHeight) * 70), 70);
+                updateProgress(progress);
+            }
+        });
+        
+        function updateProgress(percent) {
+            const fill = document.getElementById('progress-fill');
+            const text = document.getElementById('progress-text');
+            const currentWidth = parseInt(fill.style.width) || 0;
+            if (percent > currentWidth) {
+                fill.style.width = percent + '%';
+                text.textContent = percent + '% Complete';
+                localStorage.setItem('medstation_f2_progress', percent);
+            }
+        }
+        
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            
+            for (let i = 1; i <= 6; i++) {
+                const questionId = 'q' + i;
+                const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+                const feedbackEl = document.getElementById('feedback-' + questionId);
+                const options = document.querySelectorAll(`#${questionId} .option`);
+                
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect', 'selected'));
+                
+                if (!selected) {
+                    allAnswered = false;
+                    feedbackEl.textContent = 'Please select an answer.';
+                    feedbackEl.className = 'feedback show incorrect';
+                    continue;
+                }
+                
+                const userAnswer = selected.value;
+                const correctAnswer = answers[questionId].correct;
+                const selectedOption = selected.closest('.option');
+                
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    selectedOption.classList.add('correct');
+                    feedbackEl.textContent = answers[questionId].feedback;
+                    feedbackEl.className = 'feedback show correct';
+                } else {
+                    selectedOption.classList.add('incorrect');
+                    options.forEach(opt => {
+                        if (opt.dataset.value === correctAnswer) opt.classList.add('correct');
+                    });
+                    feedbackEl.textContent = wrongFeedback[questionId];
+                    feedbackEl.className = 'feedback show incorrect';
+                }
+            }
+            
+            if (!allAnswered) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            
+            const resultsEl = document.getElementById('results');
+            document.getElementById('score-number').textContent = score;
+            resultsEl.classList.add('show');
+            
+            const resultsMessage = document.getElementById('results-message');
+            if (score === 6) {
+                resultsMessage.textContent = '🎉 Perfect score! Excellent understanding of healthcare markets.';
+                resultsMessage.style.color = 'var(--success)';
+            } else if (score >= 5) {
+                resultsMessage.textContent = '👍 Great job! You have a solid grasp of the material.';
+                resultsMessage.style.color = 'var(--primary-dark)';
+            } else if (score >= 4) {
+                resultsMessage.textContent = '📚 Good effort! Consider reviewing the sections you missed.';
+                resultsMessage.style.color = 'var(--text-dark)';
+            } else {
+                resultsMessage.textContent = '📖 Keep learning! Review the module content and try again.';
+                resultsMessage.style.color = 'var(--error)';
+            }
+            
+            updateProgress(100);
+            document.getElementById('submit-quiz').style.display = 'none';
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function completeModule() {
+            localStorage.setItem('medstation_f2_complete', 'true');
+            localStorage.setItem('medstation_f2_progress', '100');
+            document.getElementById('next-module').style.display = 'inline-block';
+            window.location.href = 'F3_healthcare_business.html';
+        }
+        
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionDiv = this.closest('.question');
+                questionDiv.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+            });
+        });
+        
+        window.addEventListener('load', function() {
+            const savedProgress = localStorage.getItem('medstation_f2_progress');
+            if (savedProgress) updateProgress(parseInt(savedProgress));
+        });
+    </script>
+</body>
+</html>

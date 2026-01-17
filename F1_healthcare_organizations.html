@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1: Healthcare Organizations | Medstation Fellowship</title>
+    <style>
+        :root {
+            --primary-dark: #1B4F72;
+            --primary-medium: #2874A6;
+            --primary-light: #EBF5FB;
+            --accent-green: #D5F5E3;
+            --accent-yellow: #FCF3CF;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --text-light: #7F8C8D;
+            --border: #CCCCCC;
+            --white: #FFFFFF;
+            --success: #27AE60;
+            --error: #E74C3C;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            color: var(--white);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .tagline {
+            font-size: 12px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .module-badge {
+            background: var(--accent-green);
+            color: var(--primary-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            background: var(--primary-light);
+            padding: 15px 40px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .progress-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .progress-label {
+            font-size: 14px;
+            color: var(--text-medium);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .progress-bar {
+            background: var(--border);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary-medium), var(--success));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .module-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        .module-number {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            line-height: 60px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+        
+        .duration {
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+        
+        .duration span {
+            background: var(--accent-yellow);
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-left: 5px;
+        }
+        
+        /* Objectives */
+        .objectives {
+            background: var(--accent-green);
+            border-left: 4px solid var(--success);
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .objectives h2 {
+            color: var(--primary-dark);
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .objectives ul {
+            margin-left: 25px;
+        }
+        
+        .objectives li {
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+        
+        /* Content Sections */
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        h3 {
+            font-size: 20px;
+            color: var(--primary-medium);
+            margin: 25px 0 15px 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        /* Key Concept Box */
+        .key-concept {
+            background: var(--primary-light);
+            border: 1px solid var(--primary-medium);
+            border-radius: 8px;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+        
+        .key-concept-title {
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        
+        th {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        tr:nth-child(even) {
+            background: var(--primary-light);
+        }
+        
+        tr:hover {
+            background: var(--accent-green);
+        }
+        
+        /* Callout */
+        .callout {
+            background: var(--accent-yellow);
+            border-left: 4px solid #F39C12;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .callout-title {
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        
+        /* Quiz Section */
+        .quiz-section {
+            background: var(--primary-light);
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 50px;
+        }
+        
+        .quiz-section h2 {
+            text-align: center;
+            border-bottom: none;
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: var(--primary-dark);
+            color: var(--white);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            border-color: var(--primary-medium);
+            background: var(--primary-light);
+        }
+        
+        .option.selected {
+            border-color: var(--primary-dark);
+            background: var(--primary-light);
+        }
+        
+        .option.correct {
+            border-color: var(--success);
+            background: var(--accent-green);
+        }
+        
+        .option.incorrect {
+            border-color: var(--error);
+            background: #FADBD8;
+        }
+        
+        .option input {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: var(--accent-green);
+            color: var(--primary-dark);
+        }
+        
+        .feedback.incorrect {
+            background: #FADBD8;
+            color: var(--error);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: var(--primary-dark);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-medium);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27, 79, 114, 0.3);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+        
+        .btn-success:hover {
+            background: #219A52;
+        }
+        
+        .quiz-controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        /* Results */
+        .results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-dark);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .score-label {
+            font-size: 12px;
+            font-weight: normal;
+            opacity: 0.9;
+        }
+        
+        .results-message {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--primary-light);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+        
+        .footer a {
+            color: var(--accent-green);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .container {
+                padding: 25px 15px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            h2 {
+                font-size: 22px;
+            }
+            
+            .quiz-section {
+                padding: 25px 15px;
+            }
+            
+            .question {
+                padding: 20px 15px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-buttons .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .header, .progress-container, .quiz-section, .nav-buttons, .footer {
+                display: none;
+            }
+            
+            .container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <div class="logo">MEDSTATION</div>
+                <div class="tagline">Cuidado com Propósito</div>
+            </div>
+            <div class="module-badge">Foundation Module 1 of 6</div>
+        </div>
+    </header>
+    
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-inner">
+            <div class="progress-label">
+                <span>Module Progress</span>
+                <span id="progress-text">0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <div class="module-header">
+            <div class="module-number">F1</div>
+            <h1>Healthcare Organizations</h1>
+            <p class="duration">Estimated Time: <span>45-60 minutes</span></p>
+        </div>
+        
+        <!-- Learning Objectives -->
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>By the end of this module, you will be able to:</p>
+            <ul>
+                <li>Identify the major types of healthcare organizations in the U.S.</li>
+                <li>Explain the role and significance of Federally Qualified Health Centers (FQHCs)</li>
+                <li>Describe Medstation's organizational structure, mission, and market position</li>
+                <li>Understand key stakeholder relationships in healthcare delivery</li>
+                <li>Recognize the unique characteristics of community-focused healthcare</li>
+            </ul>
+        </div>
+        
+        <!-- Section 1 -->
+        <div class="section" id="section-1">
+            <h2>1. Overview of Healthcare Organizations</h2>
+            
+            <p>The U.S. healthcare system comprises a diverse ecosystem of organizations, each serving distinct purposes and populations. Understanding this landscape is essential for anyone working in healthcare operations or administration.</p>
+            
+            <h3>Types of Healthcare Organizations</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Organization Type</th>
+                            <th>Primary Function</th>
+                            <th>Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Hospitals</strong></td>
+                            <td>Inpatient care, emergency services, surgeries</td>
+                            <td>HCA Healthcare, Mayo Clinic, community hospitals</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Primary Care Clinics</strong></td>
+                            <td>Preventive care, chronic disease management</td>
+                            <td>Private practices, urgent care, retail clinics</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Specialty Practices</strong></td>
+                            <td>Focused expertise (cardiology, orthopedics, etc.)</td>
+                            <td>Single-specialty groups, ASCs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FQHCs</strong></td>
+                            <td>Community health for underserved populations</td>
+                            <td>Community health centers nationwide</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Health Systems</strong></td>
+                            <td>Integrated networks of facilities and services</td>
+                            <td>Kaiser Permanente, Geisinger, Cleveland Clinic</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept</div>
+                <p><strong>Continuum of Care:</strong> Healthcare organizations increasingly work together to provide coordinated care across settings—from preventive visits at primary care clinics to specialty consultations to hospital admissions and post-discharge follow-up. This integration improves outcomes and reduces costs.</p>
+            </div>
+        </div>
+        
+        <!-- Section 2 -->
+        <div class="section" id="section-2">
+            <h2>2. Federally Qualified Health Centers (FQHCs)</h2>
+            
+            <p>FQHCs represent a critical component of the U.S. healthcare safety net, providing comprehensive care to underserved communities regardless of patients' ability to pay.</p>
+            
+            <h3>What Makes an FQHC?</h3>
+            <p>To qualify as an FQHC, an organization must:</p>
+            <ul>
+                <li>Serve a federally-designated medically underserved area or population</li>
+                <li>Offer a sliding fee scale based on patients' ability to pay</li>
+                <li>Provide comprehensive primary care services</li>
+                <li>Be governed by a community board (51%+ must be patients)</li>
+                <li>Meet federal performance and accountability requirements</li>
+            </ul>
+            
+            <div class="callout">
+                <div class="callout-title">⚠️ Important Distinction</div>
+                <p><strong>Medstation is NOT an FQHC.</strong> While Medstation shares the mission of serving underserved communities (specifically Brazilian and Brazilian-American populations), it operates as a private primary care network. Understanding this distinction helps clarify Medstation's operational flexibility and business model.</p>
+            </div>
+            
+            <h3>FQHC vs. Private Primary Care</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Characteristic</th>
+                            <th>FQHC</th>
+                            <th>Private Practice (like Medstation)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Funding</strong></td>
+                            <td>Federal grants + patient revenue</td>
+                            <td>Patient revenue + private investment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Governance</strong></td>
+                            <td>Patient-majority board required</td>
+                            <td>Owner/investor-determined</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fee Structure</strong></td>
+                            <td>Mandatory sliding scale</td>
+                            <td>Market-based with optional discounts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Service Requirements</strong></td>
+                            <td>Must offer comprehensive primary care</td>
+                            <td>Can specialize or limit services</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Flexibility</strong></td>
+                            <td>Limited by federal requirements</td>
+                            <td>High operational flexibility</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Section 3 -->
+        <div class="section" id="section-3">
+            <h2>3. Medstation: Mission and Model</h2>
+            
+            <p>Medstation is a 10-location primary care network serving Brazilian and Brazilian-American communities, primarily in Florida. Understanding Medstation's unique positioning helps contextualize all fellowship projects.</p>
+            
+            <h3>Mission Statement</h3>
+            <div class="key-concept">
+                <div class="key-concept-title">🎯 Medstation Mission</div>
+                <p><strong>"Cuidado com Propósito" — Care with Purpose.</strong> Medstation exists to provide culturally appropriate, high-quality primary care to Brazilian and Brazilian-American communities, addressing both healthcare needs and the unique challenges of immigrant populations navigating the U.S. healthcare system.</p>
+            </div>
+            
+            <h3>Organizational Structure</h3>
+            <p>Medstation operates as a growing primary care network with several key characteristics:</p>
+            
+            <ul>
+                <li><strong>10 clinic locations</strong> (expanded from 7 recently)</li>
+                <li><strong>Premium Service Center model</strong> with asset-light expansion strategy</li>
+                <li><strong>Hybrid care delivery</strong>: in-person + telehealth services</li>
+                <li><strong>NextGen EHR platform</strong> for integrated health records</li>
+                <li><strong>AI-enabled operations</strong> through Recura for patient engagement</li>
+            </ul>
+            
+            <h3>Target Population</h3>
+            <p>Medstation's focus on Brazilian and Brazilian-American communities creates unique operational considerations:</p>
+            
+            <ul>
+                <li><strong>Language:</strong> Portuguese-speaking providers and staff</li>
+                <li><strong>Cultural competency:</strong> Understanding Brazilian healthcare expectations</li>
+                <li><strong>Immigration-sensitive:</strong> Awareness of documentation concerns and barriers</li>
+                <li><strong>Community trust:</strong> Building relationships through cultural alignment</li>
+            </ul>
+            
+            <div class="callout">
+                <div class="callout-title">📊 By the Numbers</div>
+                <p>The Brazilian-American population in Florida exceeds 300,000, with significant concentrations in South Florida. Many immigrants face language barriers, unfamiliarity with U.S. healthcare systems, and concerns about accessing care. Medstation addresses these challenges through culturally competent, community-focused care delivery.</p>
+            </div>
+        </div>
+        
+        <!-- Section 4 -->
+        <div class="section" id="section-4">
+            <h2>4. Healthcare Stakeholder Relationships</h2>
+            
+            <p>Healthcare organizations interact with multiple stakeholder groups. Understanding these relationships is essential for anyone working in healthcare operations.</p>
+            
+            <h3>Key Stakeholder Groups</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stakeholder</th>
+                            <th>Role</th>
+                            <th>Key Interests</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Patients</strong></td>
+                            <td>Primary customers; care recipients</td>
+                            <td>Quality care, access, affordability, experience</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Providers</strong></td>
+                            <td>Physicians, NPs, PAs delivering care</td>
+                            <td>Clinical autonomy, workload, compensation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payers</strong></td>
+                            <td>Insurance companies, Medicare, Medicaid</td>
+                            <td>Cost control, outcomes, network adequacy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Regulators</strong></td>
+                            <td>State/federal agencies (CMS, HHS, state DOH)</td>
+                            <td>Compliance, quality standards, public health</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Communities</strong></td>
+                            <td>Local populations served</td>
+                            <td>Access, trust, cultural responsiveness</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept</div>
+                <p><strong>Stakeholder Alignment:</strong> Successful healthcare organizations find ways to align stakeholder interests. For example, improving patient outcomes often reduces costs for payers while increasing satisfaction for patients and professional fulfillment for providers. The best operational decisions create value for multiple stakeholders simultaneously.</p>
+            </div>
+        </div>
+        
+        <!-- Section 5 -->
+        <div class="section" id="section-5">
+            <h2>5. Key Takeaways</h2>
+            
+            <p>Before moving to the quiz, review these essential concepts:</p>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">📋 Summary</div>
+                <ul>
+                    <li><strong>Healthcare organizations vary widely</strong> in structure, funding, and purpose—from large health systems to community clinics.</li>
+                    <li><strong>FQHCs serve a critical safety-net role</strong> but operate under strict federal requirements that limit flexibility.</li>
+                    <li><strong>Medstation is a private primary care network</strong> (not an FQHC) serving Brazilian/Brazilian-American communities with cultural competence and operational flexibility.</li>
+                    <li><strong>Multiple stakeholders</strong> influence healthcare operations; aligning their interests drives organizational success.</li>
+                    <li><strong>Community-focused care</strong> requires understanding cultural, linguistic, and social factors affecting the target population.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quiz-section">
+            <h2>📝 Knowledge Check</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: var(--text-medium);">Test your understanding of healthcare organizations. You need to answer all questions to complete this module.</p>
+            
+            <!-- Question 1 -->
+            <div class="question" id="q1">
+                <div class="question-text">
+                    <span class="question-number">1</span>
+                    Which of the following is a requirement for Federally Qualified Health Centers (FQHCs)?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q1" value="a">
+                        Must be owned by a hospital system
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q1" value="b">
+                        Must have a community board where 51%+ are patients
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q1" value="c">
+                        Must only accept patients with private insurance
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q1" value="d">
+                        Must operate in urban areas only
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q1"></div>
+            </div>
+            
+            <!-- Question 2 -->
+            <div class="question" id="q2">
+                <div class="question-text">
+                    <span class="question-number">2</span>
+                    Medstation is best described as:
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q2" value="a">
+                        A Federally Qualified Health Center receiving federal grants
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q2" value="b">
+                        A private primary care network serving Brazilian/Brazilian-American communities
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q2" value="c">
+                        A hospital system with multiple specialty departments
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q2" value="d">
+                        A government-run public health clinic
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q2"></div>
+            </div>
+            
+            <!-- Question 3 -->
+            <div class="question" id="q3">
+                <div class="question-text">
+                    <span class="question-number">3</span>
+                    What is the primary advantage of a private primary care practice (like Medstation) compared to an FQHC?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q3" value="a">
+                        Access to federal grant funding
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q3" value="b">
+                        Higher operational flexibility and autonomy
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q3" value="c">
+                        Mandatory acceptance of all patients
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q3" value="d">
+                        Exemption from all healthcare regulations
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q3"></div>
+            </div>
+            
+            <!-- Question 4 -->
+            <div class="question" id="q4">
+                <div class="question-text">
+                    <span class="question-number">4</span>
+                    Which stakeholder group is primarily interested in "cost control, outcomes, and network adequacy"?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q4" value="a">
+                        Patients
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q4" value="b">
+                        Providers
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q4" value="c">
+                        Payers (insurance companies)
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q4" value="d">
+                        Communities
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q4"></div>
+            </div>
+            
+            <!-- Question 5 -->
+            <div class="question" id="q5">
+                <div class="question-text">
+                    <span class="question-number">5</span>
+                    What does "Cuidado com Propósito" mean, and why is it significant for Medstation?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a">
+                        <input type="radio" name="q5" value="a">
+                        "Health for All" — emphasizes universal access
+                    </label>
+                    <label class="option" data-value="b">
+                        <input type="radio" name="q5" value="b">
+                        "Care with Purpose" — reflects mission to serve Brazilian communities with intentional, culturally appropriate care
+                    </label>
+                    <label class="option" data-value="c">
+                        <input type="radio" name="q5" value="c">
+                        "Quality First" — emphasizes clinical excellence above all else
+                    </label>
+                    <label class="option" data-value="d">
+                        <input type="radio" name="q5" value="d">
+                        "Affordable Care" — focuses exclusively on low-cost services
+                    </label>
+                </div>
+                <div class="feedback" id="feedback-q5"></div>
+            </div>
+            
+            <!-- Quiz Controls -->
+            <div class="quiz-controls">
+                <button class="btn btn-primary" id="submit-quiz" onclick="submitQuiz()">Submit Answers</button>
+            </div>
+            
+            <!-- Results -->
+            <div class="results" id="results">
+                <div class="score-circle">
+                    <span id="score-number">0</span>
+                    <span class="score-label">out of 5</span>
+                </div>
+                <p class="results-message" id="results-message"></p>
+                <button class="btn btn-success" id="continue-btn" onclick="completeModule()">Continue to Module F2 →</button>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <span></span> <!-- Placeholder for alignment -->
+            <a href="F2_healthcare_markets.html" class="btn btn-primary" id="next-module" style="display: none;">Next: Healthcare Markets →</a>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>Medstation Healthcare Learning Fellowship</strong></p>
+        <p>Module F1: Healthcare Organizations</p>
+        <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">© 2026 Medstation. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Quiz answers and feedback
+        const answers = {
+            q1: { correct: 'b', feedback: 'Correct! FQHCs must have a community board where at least 51% of members are patients of the health center.' },
+            q2: { correct: 'b', feedback: 'Correct! Medstation is a private primary care network (not an FQHC) that specifically serves Brazilian and Brazilian-American communities in Florida.' },
+            q3: { correct: 'b', feedback: 'Correct! Private practices have greater operational flexibility and autonomy compared to FQHCs, which must comply with extensive federal requirements.' },
+            q4: { correct: 'c', feedback: 'Correct! Payers (insurance companies, Medicare, Medicaid) are primarily focused on controlling costs while ensuring quality outcomes and adequate provider networks.' },
+            q5: { correct: 'b', feedback: 'Correct! "Cuidado com Propósito" means "Care with Purpose" in Portuguese, reflecting Medstation\'s mission to provide intentional, culturally appropriate care to Brazilian communities.' }
+        };
+        
+        const wrongFeedback = {
+            q1: 'Incorrect. FQHCs must have community boards where at least 51% of members are patients—this ensures community governance and accountability.',
+            q2: 'Incorrect. Medstation is a private primary care network, not an FQHC. While it serves underserved communities, it operates with private funding and greater flexibility.',
+            q3: 'Incorrect. The main advantage of private practice is operational flexibility. FQHCs receive federal grants but must comply with extensive requirements.',
+            q4: 'Incorrect. Payers (insurance companies) focus on cost control, outcomes, and network adequacy. Patients care about quality and access; providers about autonomy and compensation.',
+            q5: 'Incorrect. "Cuidado com Propósito" is Portuguese for "Care with Purpose," reflecting Medstation\'s intentional focus on culturally appropriate care for Brazilian communities.'
+        };
+        
+        // Track scroll progress
+        let maxScroll = 0;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            if (scrolled > maxScroll) {
+                maxScroll = scrolled;
+                const progress = Math.min(Math.round((maxScroll / totalHeight) * 70), 70); // Max 70% from scrolling
+                updateProgress(progress);
+            }
+        });
+        
+        function updateProgress(percent) {
+            const fill = document.getElementById('progress-fill');
+            const text = document.getElementById('progress-text');
+            const currentWidth = parseInt(fill.style.width) || 0;
+            if (percent > currentWidth) {
+                fill.style.width = percent + '%';
+                text.textContent = percent + '% Complete';
+                localStorage.setItem('medstation_f1_progress', percent);
+            }
+        }
+        
+        // Quiz functionality
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            
+            for (let i = 1; i <= 5; i++) {
+                const questionId = 'q' + i;
+                const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+                const feedbackEl = document.getElementById('feedback-' + questionId);
+                const options = document.querySelectorAll(`#${questionId} .option`);
+                
+                // Reset option styles
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect', 'selected');
+                });
+                
+                if (!selected) {
+                    allAnswered = false;
+                    feedbackEl.textContent = 'Please select an answer.';
+                    feedbackEl.className = 'feedback show incorrect';
+                    continue;
+                }
+                
+                const userAnswer = selected.value;
+                const correctAnswer = answers[questionId].correct;
+                const selectedOption = selected.closest('.option');
+                
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    selectedOption.classList.add('correct');
+                    feedbackEl.textContent = answers[questionId].feedback;
+                    feedbackEl.className = 'feedback show correct';
+                } else {
+                    selectedOption.classList.add('incorrect');
+                    // Highlight correct answer
+                    options.forEach(opt => {
+                        if (opt.dataset.value === correctAnswer) {
+                            opt.classList.add('correct');
+                        }
+                    });
+                    feedbackEl.textContent = wrongFeedback[questionId];
+                    feedbackEl.className = 'feedback show incorrect';
+                }
+            }
+            
+            if (!allAnswered) {
+                alert('Please answer all questions before submitting.');
+                return;
+            }
+            
+            // Show results
+            const resultsEl = document.getElementById('results');
+            const scoreNumber = document.getElementById('score-number');
+            const resultsMessage = document.getElementById('results-message');
+            
+            scoreNumber.textContent = score;
+            resultsEl.classList.add('show');
+            
+            if (score === 5) {
+                resultsMessage.textContent = '🎉 Perfect score! Excellent understanding of healthcare organizations.';
+                resultsMessage.style.color = 'var(--success)';
+            } else if (score >= 4) {
+                resultsMessage.textContent = '👍 Great job! You have a solid grasp of the material.';
+                resultsMessage.style.color = 'var(--primary-dark)';
+            } else if (score >= 3) {
+                resultsMessage.textContent = '📚 Good effort! Consider reviewing the sections you missed.';
+                resultsMessage.style.color = 'var(--text-dark)';
+            } else {
+                resultsMessage.textContent = '📖 Keep learning! Review the module content and try again.';
+                resultsMessage.style.color = 'var(--error)';
+            }
+            
+            // Update progress to 100%
+            updateProgress(100);
+            
+            // Hide submit button
+            document.getElementById('submit-quiz').style.display = 'none';
+            
+            // Scroll to results
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function completeModule() {
+            // Save completion status
+            localStorage.setItem('medstation_f1_complete', 'true');
+            localStorage.setItem('medstation_f1_progress', '100');
+            
+            // Show next module button
+            document.getElementById('next-module').style.display = 'inline-block';
+            
+            // Navigate to next module
+            window.location.href = 'F2_healthcare_markets.html';
+        }
+        
+        // Option selection styling
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionDiv = this.closest('.question');
+                questionDiv.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+            });
+        });
+        
+        // Load saved progress on page load
+        window.addEventListener('load', function() {
+            const savedProgress = localStorage.getItem('medstation_f1_progress');
+            if (savedProgress) {
+                updateProgress(parseInt(savedProgress));
+            }
+        });
+    </script>
+</body>
+</html>

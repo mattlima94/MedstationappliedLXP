@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fellow Evaluation Rubric | Medstation 2026</title>
+    <style>
+        :root { --primary: #1B4F72; --secondary: #2874A6; --light-blue: #EBF5FB; --light-green: #D5F5E3; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid var(--primary); }
+        .header h1 { color: var(--primary); font-size: 28px; margin-bottom: 5px; }
+        .purpose-box { background: var(--light-blue); border-left: 4px solid var(--primary); padding: 20px; margin-bottom: 20px; border-radius: 0 8px 8px 0; }
+        .warning-box { background: #FCF3CF; border-left: 4px solid #F39C12; padding: 15px 20px; margin-bottom: 30px; border-radius: 0 8px 8px 0; }
+        h2 { color: var(--primary); font-size: 18px; margin: 20px 0 15px; }
+        h3 { color: var(--secondary); font-size: 16px; margin: 15px 0 10px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; font-family: Arial; }
+        .dimension { background: #fafafa; border: 1px solid #eee; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .dimension-title { font-weight: bold; color: var(--primary); margin-bottom: 10px; }
+        .dimension-desc { font-size: 13px; color: #666; margin-bottom: 15px; }
+        .rating-scale { display: flex; gap: 10px; margin-bottom: 15px; }
+        .rating-scale label { flex: 1; text-align: center; padding: 10px 5px; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .rating-scale input { display: none; }
+        .rating-scale input:checked + label { border-color: var(--primary); background: var(--primary); color: white; }
+        .overall { background: var(--light-green); padding: 25px; border-radius: 8px; margin-top: 30px; }
+        .score-display { text-align: center; padding: 20px; background: white; border-radius: 8px; margin-bottom: 20px; }
+        .score-display .total { font-size: 48px; font-weight: bold; color: var(--primary); }
+        .btn { padding: 12px 30px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn-primary { background: var(--primary); color: white; }
+        .submit { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; }
+        @media print { .btn, .submit { display: none; } body { background: white; } .container { box-shadow: none; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>MEDSTATION</h1>
+        <div style="color: #2874A6;">Healthcare Learning Fellowship 2026 — Fellow Evaluation Rubric</div>
+    </div>
+    <div class="purpose-box">
+        <h2 style="margin-top:0;">Purpose of This Evaluation</h2>
+        <p><strong>1. Developmental Feedback:</strong> Help fellows understand strengths and growth areas.</p>
+        <p><strong>2. Documentation:</strong> Create a record of performance during the fellowship.</p>
+    </div>
+    <div class="warning-box">
+        <strong>Important:</strong> This evaluation does not determine or guarantee consideration for future opportunities. Decisions about internships or employment are made independently based on business needs.
+    </div>
+    <h2>Fellow Information</h2>
+    <div class="form-row">
+        <div class="form-group"><label>Fellow Name</label><input type="text" id="fellowName"></div>
+        <div class="form-group"><label>Project</label>
+            <select id="project">
+                <option value="">Select...</option>
+                <option value="A">A - Clinical Operations</option>
+                <option value="B">B - Revenue Cycle</option>
+                <option value="C">C - Clinical Quality Dashboard</option>
+                <option value="D">D - Provider Recruitment</option>
+                <option value="E">E - Telehealth Expansion</option>
+                <option value="F">F - Community Partnership</option>
+                <option value="G">G - Digital Marketing</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group"><label>Mentor Name</label><input type="text" id="mentorName"></div>
+        <div class="form-group"><label>Date</label><input type="date" id="evalDate"></div>
+    </div>
+    <h2>Evaluation Dimensions</h2>
+    <div class="dimension">
+        <div class="dimension-title">1. Learning Agility</div>
+        <div class="dimension-desc">How quickly did they grasp new concepts? Did they ask good questions? Did they apply feedback?</div>
+        <div class="rating-scale">
+            <input type="radio" name="d1" id="d1-1" value="1"><label for="d1-1">1<br>Needs Dev</label>
+            <input type="radio" name="d1" id="d1-2" value="2"><label for="d1-2">2<br>Below</label>
+            <input type="radio" name="d1" id="d1-3" value="3"><label for="d1-3">3<br>Meets</label>
+            <input type="radio" name="d1" id="d1-4" value="4"><label for="d1-4">4<br>Exceeds</label>
+            <input type="radio" name="d1" id="d1-5" value="5"><label for="d1-5">5<br>Exceptional</label>
+        </div>
+        <div class="form-group"><label>Evidence</label><textarea rows="2"></textarea></div>
+    </div>
+    <div class="dimension">
+        <div class="dimension-title">2. Initiative</div>
+        <div class="dimension-desc">Did they proactively seek information? Identify problems? Suggest improvements?</div>
+        <div class="rating-scale">
+            <input type="radio" name="d2" id="d2-1" value="1"><label for="d2-1">1<br>Needs Dev</label>
+            <input type="radio" name="d2" id="d2-2" value="2"><label for="d2-2">2<br>Below</label>
+            <input type="radio" name="d2" id="d2-3" value="3"><label for="d2-3">3<br>Meets</label>
+            <input type="radio" name="d2" id="d2-4" value="4"><label for="d2-4">4<br>Exceeds</label>
+            <input type="radio" name="d2" id="d2-5" value="5"><label for="d2-5">5<br>Exceptional</label>
+        </div>
+        <div class="form-group"><label>Evidence</label><textarea rows="2"></textarea></div>
+    </div>
+    <div class="dimension">
+        <div class="dimension-title">3. Communication</div>
+        <div class="dimension-desc">Were they clear in writing/speaking? Did they adapt to audience? Keep stakeholders informed?</div>
+        <div class="rating-scale">
+            <input type="radio" name="d3" id="d3-1" value="1"><label for="d3-1">1<br>Needs Dev</label>
+            <input type="radio" name="d3" id="d3-2" value="2"><label for="d3-2">2<br>Below</label>
+            <input type="radio" name="d3" id="d3-3" value="3"><label for="d3-3">3<br>Meets</label>
+            <input type="radio" name="d3" id="d3-4" value="4"><label for="d3-4">4<br>Exceeds</label>
+            <input type="radio" name="d3" id="d3-5" value="5"><label for="d3-5">5<br>Exceptional</label>
+        </div>
+        <div class="form-group"><label>Evidence</label><textarea rows="2"></textarea></div>
+    </div>
+    <div class="dimension">
+        <div class="dimension-title">4. Quality of Work</div>
+        <div class="dimension-desc">Was their work accurate and thorough? Did they pay attention to details?</div>
+        <div class="rating-scale">
+            <input type="radio" name="d4" id="d4-1" value="1"><label for="d4-1">1<br>Needs Dev</label>
+            <input type="radio" name="d4" id="d4-2" value="2"><label for="d4-2">2<br>Below</label>
+            <input type="radio" name="d4" id="d4-3" value="3"><label for="d4-3">3<br>Meets</label>
+            <input type="radio" name="d4" id="d4-4" value="4"><label for="d4-4">4<br>Exceeds</label>
+            <input type="radio" name="d4" id="d4-5" value="5"><label for="d4-5">5<br>Exceptional</label>
+        </div>
+        <div class="form-group"><label>Evidence</label><textarea rows="2"></textarea></div>
+    </div>
+    <div class="dimension">
+        <div class="dimension-title">5. Professionalism</div>
+        <div class="dimension-desc">Were they punctual and reliable? Did they handle feedback gracefully?</div>
+        <div class="rating-scale">
+            <input type="radio" name="d5" id="d5-1" value="1"><label for="d5-1">1<br>Needs Dev</label>
+            <input type="radio" name="d5" id="d5-2" value="2"><label for="d5-2">2<br>Below</label>
+            <input type="radio" name="d5" id="d5-3" value="3"><label for="d5-3">3<br>Meets</label>
+            <input type="radio" name="d5" id="d5-4" value="4"><label for="d5-4">4<br>Exceeds</label>
+            <input type="radio" name="d5" id="d5-5" value="5"><label for="d5-5">5<br>Exceptional</label>
+        </div>
+        <div class="form-group"><label>Evidence</label><textarea rows="2"></textarea></div>
+    </div>
+    <div class="dimension">
+        <div class="dimension-title">6. Cultural Fit</div>
+        <div class="dimension-desc">Did they align with Medstation's mission? Work well with the team?</div>
+        <div class="rating-scale">
+            <input type="radio" name="d6" id="d6-1" value="1"><label for="d6-1">1<br>Needs Dev</label>
+            <input type="radio" name="d6" id="d6-2" value="2"><label for="d6-2">2<br>Below</label>
+            <input type="radio" name="d6" id="d6-3" value="3"><label for="d6-3">3<br>Meets</label>
+            <input type="radio" name="d6" id="d6-4" value="4"><label for="d6-4">4<br>Exceeds</label>
+            <input type="radio" name="d6" id="d6-5" value="5"><label for="d6-5">5<br>Exceptional</label>
+        </div>
+        <div class="form-group"><label>Evidence</label><textarea rows="2"></textarea></div>
+    </div>
+    <div class="overall">
+        <h2 style="margin-top:0;">Overall Assessment</h2>
+        <div class="score-display"><span class="total" id="totalScore">--</span><span style="color:#999;font-size:24px;"> / 30</span></div>
+        <div class="form-group"><label>Key Strengths (2-3)</label><textarea rows="3"></textarea></div>
+        <div class="form-group"><label>Growth Areas (1-2)</label><textarea rows="3"></textarea></div>
+        <div class="form-group"><label>Additional Comments (internal)</label><textarea rows="2"></textarea></div>
+    </div>
+    <div class="submit">
+        <button class="btn btn-primary" onclick="calcScore()">Calculate Score</button>
+        <button class="btn" style="background:#6c757d;color:white;" onclick="window.print()">Print/PDF</button>
+    </div>
+</div>
+<script>
+function calcScore(){let t=0,n=0;for(let i=1;i<=6;i++){const s=document.querySelector(`input[name="d${i}"]:checked`);if(s){t+=parseInt(s.value);n++;}}
+if(n===6){document.getElementById('totalScore').textContent=t;}else{alert('Please rate all dimensions.');}}
+document.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener('change',calcScore));
+document.getElementById('evalDate').valueAsDate=new Date();
+</script>
+</body>
+</html>

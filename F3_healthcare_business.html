@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F3: Healthcare Business | Medstation Fellowship</title>
+    <style>
+        :root {
+            --primary-dark: #1B4F72;
+            --primary-medium: #2874A6;
+            --primary-light: #EBF5FB;
+            --accent-green: #D5F5E3;
+            --accent-yellow: #FCF3CF;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --text-light: #7F8C8D;
+            --border: #CCCCCC;
+            --white: #FFFFFF;
+            --success: #27AE60;
+            --error: #E74C3C;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--white);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            color: var(--white);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .tagline { font-size: 12px; opacity: 0.9; font-style: italic; }
+        .module-badge { background: var(--accent-green); color: var(--primary-dark); padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        
+        .progress-container { background: var(--primary-light); padding: 15px 40px; border-bottom: 1px solid var(--border); }
+        .progress-inner { max-width: 1000px; margin: 0 auto; }
+        .progress-label { font-size: 14px; color: var(--text-medium); margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .progress-bar { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--primary-medium), var(--success)); height: 100%; width: 0%; transition: width 0.5s ease; }
+        
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        
+        .module-header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 2px solid var(--primary-light); }
+        .module-number { display: inline-block; background: var(--primary-dark); color: var(--white); width: 60px; height: 60px; border-radius: 50%; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 15px; }
+        h1 { font-size: 32px; color: var(--primary-dark); margin-bottom: 10px; }
+        .duration { color: var(--text-medium); font-size: 14px; }
+        .duration span { background: var(--accent-yellow); padding: 4px 12px; border-radius: 12px; margin-left: 5px; }
+        
+        .objectives { background: var(--accent-green); border-left: 4px solid var(--success); padding: 25px 30px; margin-bottom: 40px; border-radius: 0 8px 8px 0; }
+        .objectives h2 { color: var(--primary-dark); font-size: 18px; margin-bottom: 15px; }
+        .objectives ul { margin-left: 25px; }
+        .objectives li { margin-bottom: 8px; }
+        
+        .section { margin-bottom: 40px; }
+        h2 { font-size: 24px; color: var(--primary-dark); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-light); }
+        h3 { font-size: 20px; color: var(--primary-medium); margin: 25px 0 15px 0; }
+        p { margin-bottom: 15px; }
+        ul, ol { margin-left: 25px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        
+        .key-concept { background: var(--primary-light); border: 1px solid var(--primary-medium); border-radius: 8px; padding: 20px 25px; margin: 25px 0; }
+        .key-concept-title { font-weight: bold; color: var(--primary-dark); margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 15px; }
+        th { background: var(--primary-dark); color: var(--white); padding: 12px 15px; text-align: left; }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); }
+        tr:nth-child(even) { background: var(--primary-light); }
+        tr:hover { background: var(--accent-green); }
+        
+        .callout { background: var(--accent-yellow); border-left: 4px solid #F39C12; padding: 20px 25px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .callout-title { font-weight: bold; color: var(--text-dark); margin-bottom: 8px; }
+        
+        /* Calculator Styles */
+        .calculator {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 100%);
+            border: 2px solid var(--primary-medium);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .calculator h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary-dark);
+        }
+        
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .calc-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .calc-input-group label {
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .calc-input-group input {
+            padding: 12px 15px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .calc-input-group input:focus {
+            outline: none;
+            border-color: var(--primary-medium);
+        }
+        
+        .calc-input-group .hint {
+            font-size: 12px;
+            color: var(--text-medium);
+            margin-top: 4px;
+        }
+        
+        .calc-button {
+            grid-column: 1 / -1;
+            padding: 15px 30px;
+            background: var(--primary-dark);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .calc-button:hover {
+            background: var(--primary-medium);
+        }
+        
+        .calc-results {
+            grid-column: 1 / -1;
+            background: var(--white);
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .calc-results.show {
+            display: block;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .result-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--primary-dark);
+        }
+        
+        .result-label { color: var(--text-dark); }
+        .result-value { font-weight: bold; color: var(--primary-medium); }
+        .result-positive { color: var(--success); }
+        .result-negative { color: var(--error); }
+        
+        /* Revenue Cycle Flow */
+        .flow-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+        
+        .flow-step {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 120px;
+            position: relative;
+        }
+        
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            color: var(--primary-medium);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        /* Quiz Styles */
+        .quiz-section { background: var(--primary-light); padding: 40px; border-radius: 12px; margin-top: 50px; }
+        .quiz-section h2 { text-align: center; border-bottom: none; margin-bottom: 30px; }
+        .question { background: var(--white); border-radius: 8px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .question-number { display: inline-block; background: var(--primary-dark); color: var(--white); width: 30px; height: 30px; border-radius: 50%; text-align: center; line-height: 30px; font-size: 14px; font-weight: bold; margin-right: 10px; }
+        .question-text { font-weight: bold; margin-bottom: 15px; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option { display: flex; align-items: center; padding: 12px 15px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; }
+        .option:hover { border-color: var(--primary-medium); background: var(--primary-light); }
+        .option.selected { border-color: var(--primary-dark); background: var(--primary-light); }
+        .option.correct { border-color: var(--success); background: var(--accent-green); }
+        .option.incorrect { border-color: var(--error); background: #FADBD8; }
+        .option input { margin-right: 12px; transform: scale(1.2); }
+        .feedback { margin-top: 15px; padding: 12px 15px; border-radius: 6px; display: none; }
+        .feedback.show { display: block; }
+        .feedback.correct { background: var(--accent-green); color: var(--primary-dark); }
+        .feedback.incorrect { background: #FADBD8; color: var(--error); }
+        
+        .btn { display: inline-block; padding: 14px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; }
+        .btn-primary { background: var(--primary-dark); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-medium); transform: translateY(-2px); }
+        .btn-success { background: var(--success); color: var(--white); }
+        
+        .quiz-controls { text-align: center; margin-top: 30px; }
+        .results { display: none; text-align: center; padding: 30px; background: var(--white); border-radius: 12px; margin-top: 30px; }
+        .results.show { display: block; }
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; background: var(--primary-dark); color: var(--white); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; font-weight: bold; }
+        .score-label { font-size: 12px; font-weight: normal; opacity: 0.9; }
+        .results-message { font-size: 18px; margin-bottom: 20px; }
+        
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid var(--primary-light); }
+        .footer { background: var(--primary-dark); color: var(--white); text-align: center; padding: 30px; margin-top: 60px; }
+        
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; }
+            .header-content { flex-direction: column; text-align: center; }
+            .container { padding: 25px 15px; }
+            h1 { font-size: 26px; }
+            .calc-grid { grid-template-columns: 1fr; }
+            .flow-diagram { flex-direction: column; align-items: center; }
+            .flow-arrow { transform: rotate(90deg); }
+            .nav-buttons { flex-direction: column; gap: 15px; }
+            .nav-buttons .btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <div class="logo">MEDSTATION</div>
+                <div class="tagline">Cuidado com Propósito</div>
+            </div>
+            <div class="module-badge">Foundation Module 3 of 6</div>
+        </div>
+    </header>
+    
+    <div class="progress-container">
+        <div class="progress-inner">
+            <div class="progress-label">
+                <span>Module Progress</span>
+                <span id="progress-text">0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="container">
+        <div class="module-header">
+            <div class="module-number">F3</div>
+            <h1>Healthcare Business</h1>
+            <p class="duration">Estimated Time: <span>60-75 minutes</span></p>
+        </div>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>By the end of this module, you will be able to:</p>
+            <ul>
+                <li>Trace the healthcare revenue cycle from patient registration to payment</li>
+                <li>Calculate and interpret key unit economics metrics (CAC, ARPM, LTV)</li>
+                <li>Understand payer dynamics and reimbursement models</li>
+                <li>Analyze the financial drivers of a primary care practice</li>
+                <li>Apply unit economics concepts to evaluate business decisions</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="section-1">
+            <h2>1. The Healthcare Revenue Cycle</h2>
+            
+            <p>The revenue cycle encompasses all administrative and clinical functions that contribute to capturing, managing, and collecting patient service revenue. Understanding this cycle is essential for healthcare operations.</p>
+            
+            <h3>Revenue Cycle Flow</h3>
+            
+            <div class="flow-diagram">
+                <div class="flow-step">Registration</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">Eligibility</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">Service</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">Coding</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">Billing</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">Payment</div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th>Key Activities</th>
+                            <th>Common Issues</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Registration</strong></td>
+                            <td>Collect demographics, insurance info, consent forms</td>
+                            <td>Incomplete data, errors in entry</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Eligibility Verification</strong></td>
+                            <td>Verify insurance coverage, benefits, copays</td>
+                            <td>Coverage lapses, incorrect benefits</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Service Delivery</strong></td>
+                            <td>Clinical encounter, documentation</td>
+                            <td>Incomplete documentation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Coding</strong></td>
+                            <td>Assign ICD-10, CPT codes for diagnoses and procedures</td>
+                            <td>Under-coding, coding errors</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Claim Submission</strong></td>
+                            <td>Submit claims to payers electronically</td>
+                            <td>Rejections, denials</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payment & Collections</strong></td>
+                            <td>Post payments, manage patient balances</td>
+                            <td>Underpayments, bad debt</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept</div>
+                <p><strong>Days in A/R (Accounts Receivable):</strong> This metric measures how quickly a practice collects payment. Lower is better. Industry benchmark is 30-40 days. High Days in A/R indicates revenue cycle problems—delayed claims, denials, or collection issues.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-2">
+            <h2>2. Unit Economics for Healthcare</h2>
+            
+            <p>Unit economics help healthcare organizations understand the profitability of each patient relationship. These metrics guide decisions about marketing, operations, and growth strategy.</p>
+            
+            <h3>Key Metrics</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Formula</th>
+                            <th>What It Tells You</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CAC</strong><br>(Customer Acquisition Cost)</td>
+                            <td>Total Marketing Spend ÷ New Patients Acquired</td>
+                            <td>How much it costs to acquire each new patient</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ARPM</strong><br>(Avg Revenue Per Member/Month)</td>
+                            <td>Monthly Revenue ÷ Active Patients</td>
+                            <td>Average revenue generated per patient monthly</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LTV</strong><br>(Lifetime Value)</td>
+                            <td>ARPM × Average Patient Tenure (months)</td>
+                            <td>Total revenue from a patient over their relationship</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LTV:CAC Ratio</strong></td>
+                            <td>LTV ÷ CAC</td>
+                            <td>Return on patient acquisition investment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Churn Rate</strong></td>
+                            <td>Lost Patients ÷ Total Patients (monthly)</td>
+                            <td>Rate at which patients leave the practice</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="callout">
+                <div class="callout-title">📊 Healthy Benchmarks</div>
+                <ul>
+                    <li><strong>LTV:CAC Ratio:</strong> 3:1 or higher (every $1 spent on acquisition should return $3+)</li>
+                    <li><strong>CAC Payback:</strong> &lt;12 months (recover acquisition cost within first year)</li>
+                    <li><strong>Churn Rate:</strong> &lt;2-3% monthly for primary care (patients stay 3-5+ years)</li>
+                </ul>
+            </div>
+            
+            <h3>Why Unit Economics Matter</h3>
+            
+            <p>Understanding unit economics helps answer critical business questions:</p>
+            <ul>
+                <li><strong>How much can we spend on marketing?</strong> If LTV is $2,000 and you want 3:1 LTV:CAC, max CAC is ~$660</li>
+                <li><strong>Should we offer discounts?</strong> Depends on whether reduced revenue is offset by longer tenure</li>
+                <li><strong>Where should we open new clinics?</strong> Markets with higher LTV justify higher CAC</li>
+                <li><strong>Is our retention strategy working?</strong> Track churn rate and LTV over time</li>
+            </ul>
+        </div>
+        
+        <!-- Interactive Calculator -->
+        <div class="calculator" id="calculator">
+            <h3>📊 Unit Economics Calculator</h3>
+            <p style="text-align: center; color: var(--text-medium); margin-bottom: 20px;">Enter your numbers to calculate key metrics</p>
+            
+            <div class="calc-grid">
+                <div class="calc-input-group">
+                    <label for="marketing-spend">Monthly Marketing Spend ($)</label>
+                    <input type="number" id="marketing-spend" placeholder="e.g., 5000" value="5000">
+                    <span class="hint">Total marketing budget per month</span>
+                </div>
+                
+                <div class="calc-input-group">
+                    <label for="new-patients">New Patients Acquired (monthly)</label>
+                    <input type="number" id="new-patients" placeholder="e.g., 25" value="25">
+                    <span class="hint">New patients from marketing efforts</span>
+                </div>
+                
+                <div class="calc-input-group">
+                    <label for="monthly-revenue">Total Monthly Revenue ($)</label>
+                    <input type="number" id="monthly-revenue" placeholder="e.g., 150000" value="150000">
+                    <span class="hint">Gross revenue per month</span>
+                </div>
+                
+                <div class="calc-input-group">
+                    <label for="active-patients">Active Patient Count</label>
+                    <input type="number" id="active-patients" placeholder="e.g., 800" value="800">
+                    <span class="hint">Total patients with activity in past 12 months</span>
+                </div>
+                
+                <div class="calc-input-group">
+                    <label for="avg-tenure">Average Patient Tenure (months)</label>
+                    <input type="number" id="avg-tenure" placeholder="e.g., 36" value="36">
+                    <span class="hint">How long patients stay on average</span>
+                </div>
+                
+                <div class="calc-input-group">
+                    <label for="lost-patients">Patients Lost (monthly)</label>
+                    <input type="number" id="lost-patients" placeholder="e.g., 15" value="15">
+                    <span class="hint">Patients who left this month</span>
+                </div>
+                
+                <button class="calc-button" onclick="calculateMetrics()">Calculate Unit Economics</button>
+                
+                <div class="calc-results" id="calc-results">
+                    <div class="result-row">
+                        <span class="result-label">Customer Acquisition Cost (CAC)</span>
+                        <span class="result-value" id="result-cac">$0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Avg Revenue Per Member (ARPM)</span>
+                        <span class="result-value" id="result-arpm">$0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Lifetime Value (LTV)</span>
+                        <span class="result-value" id="result-ltv">$0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Monthly Churn Rate</span>
+                        <span class="result-value" id="result-churn">0%</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">CAC Payback Period</span>
+                        <span class="result-value" id="result-payback">0 months</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">LTV:CAC Ratio</span>
+                        <span class="result-value" id="result-ratio">0:1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="section-3">
+            <h2>3. Payer Dynamics & Reimbursement</h2>
+            
+            <p>Healthcare providers are paid through multiple channels, each with different rules, rates, and administrative requirements. Understanding payer dynamics is essential for financial management.</p>
+            
+            <h3>Payer Types</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Payer Type</th>
+                            <th>Coverage</th>
+                            <th>Typical Reimbursement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Commercial Insurance</strong></td>
+                            <td>Employer-sponsored, individual plans</td>
+                            <td>Highest rates (negotiated)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Medicare</strong></td>
+                            <td>65+, disabled, ESRD</td>
+                            <td>Moderate (fee schedule)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Medicaid</strong></td>
+                            <td>Low-income individuals and families</td>
+                            <td>Lowest rates</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Self-Pay</strong></td>
+                            <td>Uninsured or elective services</td>
+                            <td>Variable (often discounted)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h3>Reimbursement Models</h3>
+            
+            <ul>
+                <li><strong>Fee-for-Service (FFS):</strong> Payment per service rendered. Volume-driven. Traditional model.</li>
+                <li><strong>Value-Based Care (VBC):</strong> Payment tied to quality outcomes and cost efficiency. Growing rapidly.</li>
+                <li><strong>Capitation:</strong> Fixed monthly payment per patient regardless of services. Risk-bearing.</li>
+                <li><strong>Bundled Payments:</strong> Single payment for episode of care (e.g., joint replacement).</li>
+            </ul>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Key Concept</div>
+                <p><strong>Payer Mix:</strong> The proportion of revenue from each payer type significantly impacts profitability. A practice with 60% commercial insurance will have higher margins than one with 60% Medicaid, even with identical patient volumes.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-4">
+            <h2>4. Financial Drivers in Primary Care</h2>
+            
+            <p>Understanding what drives financial performance helps operations professionals make better decisions.</p>
+            
+            <h3>Revenue Drivers</h3>
+            <ul>
+                <li><strong>Patient Volume:</strong> More visits = more revenue (FFS model)</li>
+                <li><strong>Service Mix:</strong> Higher-reimbursing services improve margins</li>
+                <li><strong>Payer Mix:</strong> Commercial &gt; Medicare &gt; Medicaid</li>
+                <li><strong>Collection Rate:</strong> Percentage of charges actually collected</li>
+                <li><strong>Coding Accuracy:</strong> Proper coding captures appropriate reimbursement</li>
+            </ul>
+            
+            <h3>Cost Drivers</h3>
+            <ul>
+                <li><strong>Labor:</strong> 50-60% of primary care costs (providers, staff, benefits)</li>
+                <li><strong>Occupancy:</strong> Rent, utilities, maintenance</li>
+                <li><strong>Technology:</strong> EHR, practice management, telehealth platforms</li>
+                <li><strong>Supplies:</strong> Medical supplies, office supplies</li>
+                <li><strong>Administrative:</strong> Billing, compliance, insurance</li>
+            </ul>
+            
+            <div class="callout">
+                <div class="callout-title">🎯 Medstation Context</div>
+                <p>Medstation's Premium Service Center model optimizes these drivers through: asset-light expansion (lower occupancy costs), technology automation (Recura AI reduces admin labor), hybrid telehealth (expands reach without proportional space costs), and community marketing (lower CAC through word-of-mouth).</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-5">
+            <h2>5. Key Takeaways</h2>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">📋 Summary</div>
+                <ul>
+                    <li><strong>Revenue cycle</strong> flows from registration through payment—each stage can leak revenue if poorly managed.</li>
+                    <li><strong>Unit economics (CAC, ARPM, LTV)</strong> quantify patient acquisition and retention value—use them to guide investment decisions.</li>
+                    <li><strong>LTV:CAC ratio of 3:1+</strong> indicates healthy economics; below 2:1 signals trouble.</li>
+                    <li><strong>Payer mix</strong> significantly impacts profitability—commercial insurance pays the most, Medicaid the least.</li>
+                    <li><strong>Labor is the largest cost</strong> in primary care (~50-60%)—efficiency gains here have major impact.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Quiz Section -->
+        <div class="quiz-section" id="quiz-section">
+            <h2>📝 Knowledge Check</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: var(--text-medium);">Test your understanding of healthcare business. Answer all 8 questions to complete this module.</p>
+            
+            <div class="question" id="q1">
+                <div class="question-text">
+                    <span class="question-number">1</span>
+                    What does "Days in A/R" measure?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q1" value="a">The number of days a clinic is open per week</label>
+                    <label class="option" data-value="b"><input type="radio" name="q1" value="b">How quickly a practice collects payment after providing service</label>
+                    <label class="option" data-value="c"><input type="radio" name="q1" value="c">The average length of patient appointments</label>
+                    <label class="option" data-value="d"><input type="radio" name="q1" value="d">The number of days between patient visits</label>
+                </div>
+                <div class="feedback" id="feedback-q1"></div>
+            </div>
+            
+            <div class="question" id="q2">
+                <div class="question-text">
+                    <span class="question-number">2</span>
+                    What is the formula for Customer Acquisition Cost (CAC)?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q2" value="a">Revenue ÷ Number of Patients</label>
+                    <label class="option" data-value="b"><input type="radio" name="q2" value="b">Total Marketing Spend ÷ New Patients Acquired</label>
+                    <label class="option" data-value="c"><input type="radio" name="q2" value="c">Lifetime Value × Average Tenure</label>
+                    <label class="option" data-value="d"><input type="radio" name="q2" value="d">Total Costs ÷ Total Visits</label>
+                </div>
+                <div class="feedback" id="feedback-q2"></div>
+            </div>
+            
+            <div class="question" id="q3">
+                <div class="question-text">
+                    <span class="question-number">3</span>
+                    A practice has CAC of $300 and LTV of $1,200. What is the LTV:CAC ratio?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q3" value="a">1:4</label>
+                    <label class="option" data-value="b"><input type="radio" name="q3" value="b">4:1</label>
+                    <label class="option" data-value="c"><input type="radio" name="q3" value="c">$900</label>
+                    <label class="option" data-value="d"><input type="radio" name="q3" value="d">3:1</label>
+                </div>
+                <div class="feedback" id="feedback-q3"></div>
+            </div>
+            
+            <div class="question" id="q4">
+                <div class="question-text">
+                    <span class="question-number">4</span>
+                    Which payer type typically provides the HIGHEST reimbursement rates?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q4" value="a">Medicaid</label>
+                    <label class="option" data-value="b"><input type="radio" name="q4" value="b">Medicare</label>
+                    <label class="option" data-value="c"><input type="radio" name="q4" value="c">Commercial Insurance</label>
+                    <label class="option" data-value="d"><input type="radio" name="q4" value="d">Self-Pay</label>
+                </div>
+                <div class="feedback" id="feedback-q4"></div>
+            </div>
+            
+            <div class="question" id="q5">
+                <div class="question-text">
+                    <span class="question-number">5</span>
+                    In primary care, what is typically the largest cost category?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q5" value="a">Medical supplies</label>
+                    <label class="option" data-value="b"><input type="radio" name="q5" value="b">Technology (EHR, software)</label>
+                    <label class="option" data-value="c"><input type="radio" name="q5" value="c">Labor (providers, staff, benefits)</label>
+                    <label class="option" data-value="d"><input type="radio" name="q5" value="d">Rent and occupancy</label>
+                </div>
+                <div class="feedback" id="feedback-q5"></div>
+            </div>
+            
+            <div class="question" id="q6">
+                <div class="question-text">
+                    <span class="question-number">6</span>
+                    What does "payer mix" refer to?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q6" value="a">The combination of services offered by a practice</label>
+                    <label class="option" data-value="b"><input type="radio" name="q6" value="b">The proportion of revenue from each payer type (commercial, Medicare, Medicaid, etc.)</label>
+                    <label class="option" data-value="c"><input type="radio" name="q6" value="c">The ratio of providers to administrative staff</label>
+                    <label class="option" data-value="d"><input type="radio" name="q6" value="d">The balance between in-person and telehealth visits</label>
+                </div>
+                <div class="feedback" id="feedback-q6"></div>
+            </div>
+            
+            <div class="question" id="q7">
+                <div class="question-text">
+                    <span class="question-number">7</span>
+                    A healthy LTV:CAC ratio is typically considered to be:
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q7" value="a">1:3 or lower</label>
+                    <label class="option" data-value="b"><input type="radio" name="q7" value="b">3:1 or higher</label>
+                    <label class="option" data-value="c"><input type="radio" name="q7" value="c">Exactly 1:1</label>
+                    <label class="option" data-value="d"><input type="radio" name="q7" value="d">10:1 minimum</label>
+                </div>
+                <div class="feedback" id="feedback-q7"></div>
+            </div>
+            
+            <div class="question" id="q8">
+                <div class="question-text">
+                    <span class="question-number">8</span>
+                    Which revenue cycle stage involves assigning ICD-10 and CPT codes to services rendered?
+                </div>
+                <div class="options">
+                    <label class="option" data-value="a"><input type="radio" name="q8" value="a">Registration</label>
+                    <label class="option" data-value="b"><input type="radio" name="q8" value="b">Eligibility Verification</label>
+                    <label class="option" data-value="c"><input type="radio" name="q8" value="c">Coding</label>
+                    <label class="option" data-value="d"><input type="radio" name="q8" value="d">Collections</label>
+                </div>
+                <div class="feedback" id="feedback-q8"></div>
+            </div>
+            
+            <div class="quiz-controls">
+                <button class="btn btn-primary" id="submit-quiz" onclick="submitQuiz()">Submit Answers</button>
+            </div>
+            
+            <div class="results" id="results">
+                <div class="score-circle">
+                    <span id="score-number">0</span>
+                    <span class="score-label">out of 8</span>
+                </div>
+                <p class="results-message" id="results-message"></p>
+                <button class="btn btn-success" onclick="completeModule()">Continue to Module F4 →</button>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="F2_healthcare_markets.html" class="btn btn-primary">← Previous: Healthcare Markets</a>
+            <a href="F4_hipaa_compliance.html" class="btn btn-primary" id="next-module" style="display: none;">Next: HIPAA & Compliance →</a>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p><strong>Medstation Healthcare Learning Fellowship</strong></p>
+        <p>Module F3: Healthcare Business</p>
+        <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">© 2026 Medstation. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Calculator function
+        function calculateMetrics() {
+            const marketingSpend = parseFloat(document.getElementById('marketing-spend').value) || 0;
+            const newPatients = parseFloat(document.getElementById('new-patients').value) || 1;
+            const monthlyRevenue = parseFloat(document.getElementById('monthly-revenue').value) || 0;
+            const activePatients = parseFloat(document.getElementById('active-patients').value) || 1;
+            const avgTenure = parseFloat(document.getElementById('avg-tenure').value) || 1;
+            const lostPatients = parseFloat(document.getElementById('lost-patients').value) || 0;
+            
+            // Calculate metrics
+            const cac = marketingSpend / newPatients;
+            const arpm = monthlyRevenue / activePatients;
+            const ltv = arpm * avgTenure;
+            const churn = (lostPatients / activePatients) * 100;
+            const payback = cac / arpm;
+            const ratio = ltv / cac;
+            
+            // Display results
+            document.getElementById('result-cac').textContent = '$' + cac.toFixed(2);
+            document.getElementById('result-arpm').textContent = '$' + arpm.toFixed(2);
+            document.getElementById('result-ltv').textContent = '$' + ltv.toFixed(2);
+            document.getElementById('result-churn').textContent = churn.toFixed(1) + '%';
+            document.getElementById('result-payback').textContent = payback.toFixed(1) + ' months';
+            
+            const ratioElement = document.getElementById('result-ratio');
+            ratioElement.textContent = ratio.toFixed(1) + ':1';
+            ratioElement.className = 'result-value ' + (ratio >= 3 ? 'result-positive' : (ratio >= 2 ? '' : 'result-negative'));
+            
+            document.getElementById('calc-results').classList.add('show');
+        }
+        
+        // Quiz answers
+        const answers = {
+            q1: { correct: 'b', feedback: 'Correct! Days in A/R measures how quickly a practice collects payment after providing service. Lower is better (benchmark: 30-40 days).' },
+            q2: { correct: 'b', feedback: 'Correct! CAC = Total Marketing Spend ÷ New Patients Acquired. It tells you how much it costs to acquire each new patient.' },
+            q3: { correct: 'b', feedback: 'Correct! LTV:CAC = $1,200 ÷ $300 = 4:1. This is a healthy ratio, meaning each $1 spent on acquisition returns $4 in lifetime value.' },
+            q4: { correct: 'c', feedback: 'Correct! Commercial insurance typically provides the highest reimbursement rates, followed by Medicare, then Medicaid.' },
+            q5: { correct: 'c', feedback: 'Correct! Labor (providers, staff, benefits) is typically the largest cost in primary care, accounting for 50-60% of total costs.' },
+            q6: { correct: 'b', feedback: 'Correct! Payer mix refers to the proportion of revenue from each payer type. It significantly impacts practice profitability.' },
+            q7: { correct: 'b', feedback: 'Correct! A healthy LTV:CAC ratio is 3:1 or higher, meaning you generate $3+ in lifetime value for every $1 spent on acquisition.' },
+            q8: { correct: 'c', feedback: 'Correct! Coding is the revenue cycle stage where ICD-10 (diagnosis) and CPT (procedure) codes are assigned to documented services.' }
+        };
+        
+        const wrongFeedback = {
+            q1: 'Incorrect. Days in A/R (Accounts Receivable) measures how quickly payment is collected—critical for cash flow management.',
+            q2: 'Incorrect. CAC = Total Marketing Spend ÷ New Patients Acquired. It measures acquisition investment efficiency.',
+            q3: 'Incorrect. LTV:CAC = $1,200 ÷ $300 = 4:1. The ratio compares lifetime value to acquisition cost.',
+            q4: 'Incorrect. Commercial insurance typically pays the highest rates, followed by Medicare, then Medicaid.',
+            q5: 'Incorrect. Labor is the largest cost category in primary care (50-60%), making staff efficiency crucial.',
+            q6: 'Incorrect. Payer mix is the proportion of revenue from each payer type (commercial, Medicare, Medicaid, etc.).',
+            q7: 'Incorrect. A healthy LTV:CAC is 3:1 or higher—each acquisition dollar should generate $3+ in lifetime value.',
+            q8: 'Incorrect. Coding is where diagnoses and procedures are translated into ICD-10 and CPT codes for billing.'
+        };
+        
+        let maxScroll = 0;
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrolled > maxScroll) {
+                maxScroll = scrolled;
+                const progress = Math.min(Math.round((maxScroll / totalHeight) * 70), 70);
+                updateProgress(progress);
+            }
+        });
+        
+        function updateProgress(percent) {
+            const fill = document.getElementById('progress-fill');
+            const text = document.getElementById('progress-text');
+            const currentWidth = parseInt(fill.style.width) || 0;
+            if (percent > currentWidth) {
+                fill.style.width = percent + '%';
+                text.textContent = percent + '% Complete';
+                localStorage.setItem('medstation_f3_progress', percent);
+            }
+        }
+        
+        function submitQuiz() {
+            let score = 0;
+            let allAnswered = true;
+            
+            for (let i = 1; i <= 8; i++) {
+                const questionId = 'q' + i;
+                const selected = document.querySelector(`input[name="${questionId}"]:checked`);
+                const feedbackEl = document.getElementById('feedback-' + questionId);
+                const options = document.querySelectorAll(`#${questionId} .option`);
+                
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect', 'selected'));
+                
+                if (!selected) {
+                    allAnswered = false;
+                    feedbackEl.textContent = 'Please select an answer.';
+                    feedbackEl.className = 'feedback show incorrect';
+                    continue;
+                }
+                
+                const userAnswer = selected.value;
+                const correctAnswer = answers[questionId].correct;
+                const selectedOption = selected.closest('.option');
+                
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    selectedOption.classList.add('correct');
+                    feedbackEl.textContent = answers[questionId].feedback;
+                    feedbackEl.className = 'feedback show correct';
+                } else {
+                    selectedOption.classList.add('incorrect');
+                    options.forEach(opt => {
+                        if (opt.dataset.value === correctAnswer) opt.classList.add('correct');
+                    });
+                    feedbackEl.textContent = wrongFeedback[questionId];
+                    feedbackEl.className = 'feedback show incorrect';
+                }
+            }
+            
+            if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+            
+            const resultsEl = document.getElementById('results');
+            document.getElementById('score-number').textContent = score;
+            resultsEl.classList.add('show');
+            
+            const resultsMessage = document.getElementById('results-message');
+            if (score === 8) { resultsMessage.textContent = '🎉 Perfect score! Excellent understanding of healthcare business.'; resultsMessage.style.color = 'var(--success)'; }
+            else if (score >= 6) { resultsMessage.textContent = '👍 Great job! You have a solid grasp of the material.'; resultsMessage.style.color = 'var(--primary-dark)'; }
+            else if (score >= 4) { resultsMessage.textContent = '📚 Good effort! Consider reviewing the sections you missed.'; resultsMessage.style.color = 'var(--text-dark)'; }
+            else { resultsMessage.textContent = '📖 Keep learning! Review the module content and try again.'; resultsMessage.style.color = 'var(--error)'; }
+            
+            updateProgress(100);
+            document.getElementById('submit-quiz').style.display = 'none';
+            resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function completeModule() {
+            localStorage.setItem('medstation_f3_complete', 'true');
+            localStorage.setItem('medstation_f3_progress', '100');
+            document.getElementById('next-module').style.display = 'inline-block';
+            window.location.href = 'F4_hipaa_compliance.html';
+        }
+        
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionDiv = this.closest('.question');
+                questionDiv.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+            });
+        });
+        
+        window.addEventListener('load', function() {
+            const savedProgress = localStorage.getItem('medstation_f3_progress');
+            if (savedProgress) updateProgress(parseInt(savedProgress));
+        });
+    </script>
+</body>
+</html>

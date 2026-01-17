@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F6: Professional Skills | Medstation Fellowship</title>
+    <style>
+        :root {
+            --primary-dark: #1B4F72;
+            --primary-medium: #2874A6;
+            --primary-light: #EBF5FB;
+            --accent-green: #D5F5E3;
+            --accent-yellow: #FCF3CF;
+            --text-dark: #2C3E50;
+            --text-medium: #5D6D7E;
+            --border: #CCCCCC;
+            --white: #FFFFFF;
+            --success: #27AE60;
+            --error: #E74C3C;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text-dark); background-color: var(--white); }
+        
+        .header { background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%); color: var(--white); padding: 20px 40px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-content { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .tagline { font-size: 12px; opacity: 0.9; font-style: italic; }
+        .module-badge { background: var(--accent-green); color: var(--primary-dark); padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+        
+        .progress-container { background: var(--primary-light); padding: 15px 40px; border-bottom: 1px solid var(--border); }
+        .progress-inner { max-width: 1000px; margin: 0 auto; }
+        .progress-label { font-size: 14px; color: var(--text-medium); margin-bottom: 8px; display: flex; justify-content: space-between; }
+        .progress-bar { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--primary-medium), var(--success)); height: 100%; width: 0%; transition: width 0.5s ease; }
+        
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .module-header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 2px solid var(--primary-light); }
+        .module-number { display: inline-block; background: var(--primary-dark); color: var(--white); width: 60px; height: 60px; border-radius: 50%; line-height: 60px; font-size: 24px; font-weight: bold; margin-bottom: 15px; }
+        h1 { font-size: 32px; color: var(--primary-dark); margin-bottom: 10px; }
+        .duration { color: var(--text-medium); font-size: 14px; }
+        .duration span { background: var(--accent-yellow); padding: 4px 12px; border-radius: 12px; margin-left: 5px; }
+        
+        .objectives { background: var(--accent-green); border-left: 4px solid var(--success); padding: 25px 30px; margin-bottom: 40px; border-radius: 0 8px 8px 0; }
+        .objectives h2 { color: var(--primary-dark); font-size: 18px; margin-bottom: 15px; }
+        .objectives ul { margin-left: 25px; }
+        .objectives li { margin-bottom: 8px; }
+        
+        .section { margin-bottom: 40px; }
+        h2 { font-size: 24px; color: var(--primary-dark); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--primary-light); }
+        h3 { font-size: 20px; color: var(--primary-medium); margin: 25px 0 15px 0; }
+        p { margin-bottom: 15px; }
+        ul, ol { margin-left: 25px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        
+        .key-concept { background: var(--primary-light); border: 1px solid var(--primary-medium); border-radius: 8px; padding: 20px 25px; margin: 25px 0; }
+        .key-concept-title { font-weight: bold; color: var(--primary-dark); margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .callout { background: var(--accent-yellow); border-left: 4px solid #F39C12; padding: 20px 25px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .callout-title { font-weight: bold; color: var(--text-dark); margin-bottom: 8px; }
+        
+        .table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 15px; }
+        th { background: var(--primary-dark); color: var(--white); padding: 12px 15px; text-align: left; }
+        td { padding: 12px 15px; border-bottom: 1px solid var(--border); }
+        tr:nth-child(even) { background: var(--primary-light); }
+        tr:hover { background: var(--accent-green); }
+        
+        /* Skill Cards */
+        .skill-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 25px 0; }
+        .skill-card { background: var(--white); border: 2px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; transition: all 0.3s; }
+        .skill-card:hover { border-color: var(--primary-medium); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .skill-icon { font-size: 32px; margin-bottom: 10px; }
+        .skill-title { font-weight: bold; color: var(--primary-dark); margin-bottom: 8px; }
+        .skill-desc { font-size: 14px; color: var(--text-medium); }
+        
+        /* Do/Don't Cards */
+        .do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 25px 0; }
+        .do-card { background: var(--accent-green); border-radius: 12px; padding: 20px; }
+        .dont-card { background: #FADBD8; border-radius: 12px; padding: 20px; }
+        .do-card h4 { color: var(--success); margin-bottom: 12px; }
+        .dont-card h4 { color: var(--error); margin-bottom: 12px; }
+        .do-card ul, .dont-card ul { margin-left: 20px; font-size: 14px; }
+        
+        /* Self Assessment */
+        .assessment-section { background: var(--primary-light); padding: 40px; border-radius: 12px; margin-top: 50px; }
+        .assessment-section h2 { text-align: center; border-bottom: none; margin-bottom: 10px; }
+        .assessment-intro { text-align: center; margin-bottom: 30px; color: var(--text-medium); }
+        
+        .assessment-item { background: var(--white); border-radius: 8px; padding: 25px; margin-bottom: 20px; }
+        .assessment-question { font-weight: bold; margin-bottom: 15px; color: var(--text-dark); }
+        .rating-scale { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+        .rating-option { flex: 1; text-align: center; padding: 12px 8px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 14px; }
+        .rating-option:hover { border-color: var(--primary-medium); background: var(--primary-light); }
+        .rating-option.selected { border-color: var(--primary-dark); background: var(--primary-dark); color: var(--white); }
+        .rating-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-medium); }
+        
+        .reflection-area { margin-top: 30px; }
+        .reflection-area label { display: block; font-weight: bold; margin-bottom: 10px; color: var(--text-dark); }
+        .reflection-area textarea { width: 100%; min-height: 100px; padding: 15px; border: 2px solid var(--border); border-radius: 8px; font-family: Arial, sans-serif; font-size: 14px; resize: vertical; }
+        .reflection-area textarea:focus { outline: none; border-color: var(--primary-medium); }
+        
+        .btn { display: inline-block; padding: 14px 30px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-decoration: none; }
+        .btn-primary { background: var(--primary-dark); color: var(--white); }
+        .btn-primary:hover { background: var(--primary-medium); transform: translateY(-2px); }
+        .btn-success { background: var(--success); color: var(--white); }
+        
+        .assessment-controls { text-align: center; margin-top: 30px; }
+        
+        .results { display: none; text-align: center; padding: 30px; background: var(--white); border-radius: 12px; margin-top: 30px; }
+        .results.show { display: block; }
+        .results h3 { color: var(--primary-dark); margin-bottom: 20px; }
+        .results-summary { text-align: left; margin: 20px 0; }
+        .results-summary p { margin-bottom: 10px; }
+        .strength { color: var(--success); }
+        .growth { color: var(--primary-medium); }
+        
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 30px; border-top: 2px solid var(--primary-light); }
+        .footer { background: var(--primary-dark); color: var(--white); text-align: center; padding: 30px; margin-top: 60px; }
+        
+        .completion-banner { background: linear-gradient(135deg, var(--success) 0%, #1E8449 100%); color: var(--white); padding: 30px; border-radius: 12px; text-align: center; margin: 30px 0; display: none; }
+        .completion-banner.show { display: block; }
+        .completion-banner h2 { margin-bottom: 15px; }
+        
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; }
+            .header-content { flex-direction: column; text-align: center; }
+            .container { padding: 25px 15px; }
+            h1 { font-size: 26px; }
+            .do-dont { grid-template-columns: 1fr; }
+            .rating-scale { flex-wrap: wrap; }
+            .rating-option { min-width: 60px; }
+            .nav-buttons { flex-direction: column; gap: 15px; }
+            .nav-buttons .btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <div class="logo">MEDSTATION</div>
+                <div class="tagline">Cuidado com Propósito</div>
+            </div>
+            <div class="module-badge">Foundation Module 6 of 6 ✓</div>
+        </div>
+    </header>
+    
+    <div class="progress-container">
+        <div class="progress-inner">
+            <div class="progress-label">
+                <span>Module Progress</span>
+                <span id="progress-text">0% Complete</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+    
+    <main class="container">
+        <div class="module-header">
+            <div class="module-number">F6</div>
+            <h1>Professional Skills</h1>
+            <p class="duration">Estimated Time: <span>45-60 minutes</span></p>
+        </div>
+        
+        <div class="objectives">
+            <h2>🎯 Learning Objectives</h2>
+            <p>By the end of this module, you will be able to:</p>
+            <ul>
+                <li>Conduct effective stakeholder interviews to gather requirements</li>
+                <li>Create clear, professional documentation</li>
+                <li>Deliver compelling presentations to leadership</li>
+                <li>Give and receive constructive feedback</li>
+                <li>Assess your own professional skill development areas</li>
+            </ul>
+        </div>
+        
+        <div class="section" id="section-1">
+            <h2>1. Core Professional Skills</h2>
+            
+            <p>Success in healthcare operations requires more than technical knowledge. These professional skills differentiate high performers and future leaders.</p>
+            
+            <div class="skill-cards">
+                <div class="skill-card">
+                    <div class="skill-icon">🎤</div>
+                    <div class="skill-title">Interviewing</div>
+                    <div class="skill-desc">Gathering requirements from stakeholders</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📝</div>
+                    <div class="skill-title">Documentation</div>
+                    <div class="skill-desc">Clear, organized written communication</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <div class="skill-title">Presenting</div>
+                    <div class="skill-desc">Communicating findings to leadership</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💬</div>
+                    <div class="skill-title">Feedback</div>
+                    <div class="skill-desc">Giving and receiving constructive input</div>
+                </div>
+            </div>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 Why These Matter</div>
+                <p>In the fellowship, you'll interview stakeholders to understand problems, document your findings and recommendations, present to leadership, and receive feedback to improve. These skills are directly evaluated in your performance rubric.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-2">
+            <h2>2. Stakeholder Interviewing</h2>
+            
+            <p>Effective interviews uncover the real problems behind stated problems. This skill is essential for projects like patient retention analysis or process improvement.</p>
+            
+            <h3>Interview Framework: SPIN</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Purpose</th>
+                            <th>Example Questions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>S</strong>ituation</td>
+                            <td>Understand current state</td>
+                            <td>"Walk me through how scheduling works today."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P</strong>roblem</td>
+                            <td>Identify pain points</td>
+                            <td>"What's the most frustrating part of this process?"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>I</strong>mplication</td>
+                            <td>Understand impact</td>
+                            <td>"How does this affect patient satisfaction?"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>N</strong>eed-Payoff</td>
+                            <td>Explore solutions</td>
+                            <td>"If we solved this, what would change for you?"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="do-dont">
+                <div class="do-card">
+                    <h4>✓ DO</h4>
+                    <ul>
+                        <li>Prepare questions in advance</li>
+                        <li>Listen more than you talk (80/20 rule)</li>
+                        <li>Ask follow-up "why" questions</li>
+                        <li>Take detailed notes</li>
+                        <li>Summarize back what you heard</li>
+                        <li>Thank them for their time</li>
+                    </ul>
+                </div>
+                <div class="dont-card">
+                    <h4>✗ DON'T</h4>
+                    <ul>
+                        <li>Lead the witness with assumptions</li>
+                        <li>Interrupt or finish sentences</li>
+                        <li>Jump to solutions too early</li>
+                        <li>Dismiss concerns as unimportant</li>
+                        <li>Record without permission</li>
+                        <li>Share what others told you</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="callout">
+                <div class="callout-title">🎯 Pro Tip</div>
+                <p>End every interview with: "Is there anything else I should have asked you?" and "Who else should I talk to about this?" These questions often uncover the most valuable insights.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-3">
+            <h2>3. Professional Documentation</h2>
+            
+            <p>Clear documentation ensures your work is understood, actionable, and preserves institutional knowledge. Every fellowship deliverable requires strong documentation.</p>
+            
+            <h3>Documentation Principles</h3>
+            
+            <ul>
+                <li><strong>Audience-first:</strong> Write for the reader (CEO needs different detail than developer)</li>
+                <li><strong>Executive summary:</strong> Lead with conclusions and recommendations</li>
+                <li><strong>Structure:</strong> Use headings, bullets, and white space</li>
+                <li><strong>Evidence:</strong> Support claims with data and quotes</li>
+                <li><strong>Action-oriented:</strong> End with clear next steps</li>
+            </ul>
+            
+            <h3>Document Structure Template</h3>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">📄 Standard Document Structure</div>
+                <ol>
+                    <li><strong>Executive Summary</strong> (1 paragraph: problem, findings, recommendation)</li>
+                    <li><strong>Background</strong> (Context the reader needs)</li>
+                    <li><strong>Methodology</strong> (How you gathered information)</li>
+                    <li><strong>Findings</strong> (What you learned, with evidence)</li>
+                    <li><strong>Analysis</strong> (What the findings mean)</li>
+                    <li><strong>Recommendations</strong> (Specific actions to take)</li>
+                    <li><strong>Next Steps</strong> (Who does what by when)</li>
+                    <li><strong>Appendix</strong> (Supporting details, data, interview notes)</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="section" id="section-4">
+            <h2>4. Presenting to Leadership</h2>
+            
+            <p>Your final fellowship presentation to the CEO is a key evaluation moment. Effective presentations are structured, confident, and action-oriented.</p>
+            
+            <h3>Presentation Structure (15 minutes)</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Section</th>
+                            <th>Time</th>
+                            <th>Content</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Hook</strong></td>
+                            <td>1 min</td>
+                            <td>Grab attention with key finding or question</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Context</strong></td>
+                            <td>2 min</td>
+                            <td>Problem statement, why it matters</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Approach</strong></td>
+                            <td>2 min</td>
+                            <td>How you investigated (methodology)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Findings</strong></td>
+                            <td>4 min</td>
+                            <td>Key discoveries, supported by evidence</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Recommendations</strong></td>
+                            <td>3 min</td>
+                            <td>Specific actions, expected impact</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ask</strong></td>
+                            <td>1 min</td>
+                            <td>What you need from leadership</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Q&A</strong></td>
+                            <td>5 min</td>
+                            <td>Answer questions confidently</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="do-dont">
+                <div class="do-card">
+                    <h4>✓ Presentation DO's</h4>
+                    <ul>
+                        <li>Practice out loud (minimum 3 times)</li>
+                        <li>Make eye contact with audience</li>
+                        <li>Speak slowly and clearly</li>
+                        <li>Use visuals to support points</li>
+                        <li>Anticipate questions</li>
+                        <li>"I don't know, but I'll find out" is okay</li>
+                    </ul>
+                </div>
+                <div class="dont-card">
+                    <h4>✗ Presentation DON'Ts</h4>
+                    <ul>
+                        <li>Read slides word-for-word</li>
+                        <li>Cram too much on each slide</li>
+                        <li>Apologize for your work</li>
+                        <li>Go over time</li>
+                        <li>Get defensive during Q&A</li>
+                        <li>Make up answers you don't know</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="section-5">
+            <h2>5. Giving & Receiving Feedback</h2>
+            
+            <p>Feedback is how we grow. During the fellowship, you'll receive daily feedback from mentors and give feedback to teammates. Both require skill.</p>
+            
+            <h3>Receiving Feedback</h3>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">💡 The Right Mindset</div>
+                <p>Feedback is a gift. Even poorly delivered feedback usually contains something useful. Your job is to extract the signal from the noise, not to defend yourself.</p>
+            </div>
+            
+            <ul>
+                <li><strong>Listen fully</strong> before responding</li>
+                <li><strong>Ask clarifying questions:</strong> "Can you give me an example?"</li>
+                <li><strong>Assume positive intent:</strong> They want you to succeed</li>
+                <li><strong>Thank them:</strong> "I appreciate you telling me this"</li>
+                <li><strong>Reflect:</strong> What can I learn from this?</li>
+                <li><strong>Act:</strong> Make visible changes based on feedback</li>
+            </ul>
+            
+            <h3>Giving Feedback (SBI Model)</h3>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Element</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>S</strong>ituation</td>
+                            <td>When and where</td>
+                            <td>"In yesterday's team meeting..."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B</strong>ehavior</td>
+                            <td>What you observed (specific, objective)</td>
+                            <td>"...you interrupted Maria twice while she was explaining her analysis..."</td>
+                        </tr>
+                        <tr>
+                            <td><strong>I</strong>mpact</td>
+                            <td>Effect on you/team/work</td>
+                            <td>"...which made it hard for us to understand her point and seemed to discourage her."</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="callout">
+                <div class="callout-title">⚠️ Important</div>
+                <p>Focus on <strong>behavior</strong>, not character. "You interrupted" (behavior) is actionable. "You're rude" (character) is not. Good feedback is specific, timely, and focused on improvement.</p>
+            </div>
+        </div>
+        
+        <div class="section" id="section-6">
+            <h2>6. Key Takeaways</h2>
+            
+            <div class="key-concept">
+                <div class="key-concept-title">📋 Summary</div>
+                <ul>
+                    <li><strong>SPIN interviews</strong> help uncover real problems: Situation, Problem, Implication, Need-Payoff.</li>
+                    <li><strong>Documentation</strong> should lead with conclusions and be structured for your audience.</li>
+                    <li><strong>Presentations</strong> need a clear structure, practice, and confident delivery.</li>
+                    <li><strong>Receiving feedback</strong> requires listening, asking questions, and acting on it.</li>
+                    <li><strong>Giving feedback</strong> uses SBI: Situation, Behavior, Impact.</li>
+                    <li><strong>These skills are evaluated</strong> in your fellowship rubric under Communication and Collaboration.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Self Assessment Section -->
+        <div class="assessment-section" id="assessment-section">
+            <h2>📊 Professional Skills Self-Assessment</h2>
+            <p class="assessment-intro">Rate yourself honestly on each skill. This is for your own development—there are no wrong answers. Your responses will help you identify areas for growth during the fellowship.</p>
+            
+            <div class="assessment-item" data-skill="interviewing">
+                <div class="assessment-question">1. Stakeholder Interviewing: How confident are you in conducting effective interviews to gather requirements?</div>
+                <div class="rating-scale">
+                    <div class="rating-option" data-value="1">1</div>
+                    <div class="rating-option" data-value="2">2</div>
+                    <div class="rating-option" data-value="3">3</div>
+                    <div class="rating-option" data-value="4">4</div>
+                    <div class="rating-option" data-value="5">5</div>
+                </div>
+                <div class="rating-labels">
+                    <span>Novice - I need significant practice</span>
+                    <span>Expert - I do this confidently</span>
+                </div>
+            </div>
+            
+            <div class="assessment-item" data-skill="documentation">
+                <div class="assessment-question">2. Documentation: How skilled are you at creating clear, professional written documents?</div>
+                <div class="rating-scale">
+                    <div class="rating-option" data-value="1">1</div>
+                    <div class="rating-option" data-value="2">2</div>
+                    <div class="rating-option" data-value="3">3</div>
+                    <div class="rating-option" data-value="4">4</div>
+                    <div class="rating-option" data-value="5">5</div>
+                </div>
+                <div class="rating-labels">
+                    <span>Novice - I need significant practice</span>
+                    <span>Expert - I do this confidently</span>
+                </div>
+            </div>
+            
+            <div class="assessment-item" data-skill="presenting">
+                <div class="assessment-question">3. Presenting: How comfortable are you presenting findings to leadership or stakeholders?</div>
+                <div class="rating-scale">
+                    <div class="rating-option" data-value="1">1</div>
+                    <div class="rating-option" data-value="2">2</div>
+                    <div class="rating-option" data-value="3">3</div>
+                    <div class="rating-option" data-value="4">4</div>
+                    <div class="rating-option" data-value="5">5</div>
+                </div>
+                <div class="rating-labels">
+                    <span>Novice - I need significant practice</span>
+                    <span>Expert - I do this confidently</span>
+                </div>
+            </div>
+            
+            <div class="assessment-item" data-skill="receiving-feedback">
+                <div class="assessment-question">4. Receiving Feedback: How well do you receive and act on constructive criticism?</div>
+                <div class="rating-scale">
+                    <div class="rating-option" data-value="1">1</div>
+                    <div class="rating-option" data-value="2">2</div>
+                    <div class="rating-option" data-value="3">3</div>
+                    <div class="rating-option" data-value="4">4</div>
+                    <div class="rating-option" data-value="5">5</div>
+                </div>
+                <div class="rating-labels">
+                    <span>Novice - I need significant practice</span>
+                    <span>Expert - I do this confidently</span>
+                </div>
+            </div>
+            
+            <div class="assessment-item" data-skill="giving-feedback">
+                <div class="assessment-question">5. Giving Feedback: How skilled are you at giving constructive feedback to peers?</div>
+                <div class="rating-scale">
+                    <div class="rating-option" data-value="1">1</div>
+                    <div class="rating-option" data-value="2">2</div>
+                    <div class="rating-option" data-value="3">3</div>
+                    <div class="rating-option" data-value="4">4</div>
+                    <div class="rating-option" data-value="5">5</div>
+                </div>
+                <div class="rating-labels">
+                    <span>Novice - I need significant practice</span>
+                    <span>Expert - I do this confidently</span>
+                </div>
+            </div>
+            
+            <div class="assessment-item" data-skill="collaboration">
+                <div class="assessment-question">6. Collaboration: How effective are you at working in teams to achieve shared goals?</div>
+                <div class="rating-scale">
+                    <div class="rating-option" data-value="1">1</div>
+                    <div class="rating-option" data-value="2">2</div>
+                    <div class="rating-option" data-value="3">3</div>
+                    <div class="rating-option" data-value="4">4</div>
+                    <div class="rating-option" data-value="5">5</div>
+                </div>
+                <div class="rating-labels">
+                    <span>Novice - I need significant practice</span>
+                    <span>Expert - I do this confidently</span>
+                </div>
+            </div>
+            
+            <div class="reflection-area">
+                <label for="growth-areas">What professional skills do you most want to develop during this fellowship?</label>
+                <textarea id="growth-areas" placeholder="Write your reflection here..."></textarea>
+            </div>
+            
+            <div class="reflection-area">
+                <label for="strengths">What professional strengths do you bring to your team?</label>
+                <textarea id="strengths" placeholder="Write your reflection here..."></textarea>
+            </div>
+            
+            <div class="assessment-controls">
+                <button class="btn btn-primary" id="submit-assessment" onclick="submitAssessment()">Complete Self-Assessment</button>
+            </div>
+            
+            <div class="results" id="results">
+                <h3>🎯 Your Self-Assessment Results</h3>
+                <div class="results-summary" id="results-summary"></div>
+                <p style="margin-top: 20px; color: var(--text-medium);">Use these insights during the fellowship to focus your development. Your mentors will help you grow in these areas.</p>
+                <button class="btn btn-success" onclick="completeModule()">Complete Foundation Modules →</button>
+            </div>
+        </div>
+        
+        <div class="completion-banner" id="completion-banner">
+            <h2>🎉 Congratulations!</h2>
+            <p>You've completed all 6 Foundation Modules of the Medstation Healthcare Learning Fellowship.</p>
+            <p style="margin-top: 15px;"><strong>Next:</strong> You're ready to begin your Track Specialization and Applied Learning Project.</p>
+        </div>
+        
+        <div class="nav-buttons">
+            <a href="F5_healthcare_delivery.html" class="btn btn-primary">← Previous: Healthcare Delivery</a>
+            <span id="next-placeholder"></span>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p><strong>Medstation Healthcare Learning Fellowship</strong></p>
+        <p>Module F6: Professional Skills</p>
+        <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">© 2026 Medstation. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        const ratings = {};
+        
+        // Handle rating selection
+        document.querySelectorAll('.rating-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const container = this.closest('.assessment-item');
+                const skill = container.dataset.skill;
+                const value = parseInt(this.dataset.value);
+                
+                // Clear previous selection
+                container.querySelectorAll('.rating-option').forEach(opt => opt.classList.remove('selected'));
+                
+                // Set new selection
+                this.classList.add('selected');
+                ratings[skill] = value;
+            });
+        });
+        
+        function submitAssessment() {
+            // Check if all ratings are complete
+            const requiredSkills = ['interviewing', 'documentation', 'presenting', 'receiving-feedback', 'giving-feedback', 'collaboration'];
+            const missing = requiredSkills.filter(skill => !ratings[skill]);
+            
+            if (missing.length > 0) {
+                alert('Please rate all skills before completing the assessment.');
+                return;
+            }
+            
+            // Calculate results
+            const scores = Object.values(ratings);
+            const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+            
+            const strengths = [];
+            const growth = [];
+            
+            for (const [skill, score] of Object.entries(ratings)) {
+                const skillName = skill.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                if (score >= 4) {
+                    strengths.push(skillName);
+                } else if (score <= 2) {
+                    growth.push(skillName);
+                }
+            }
+            
+            // Build results summary
+            let summary = '<p><strong>Average Self-Rating:</strong> ' + avg.toFixed(1) + ' / 5</p>';
+            
+            if (strengths.length > 0) {
+                summary += '<p class="strength"><strong>Your Strengths:</strong> ' + strengths.join(', ') + '</p>';
+            }
+            
+            if (growth.length > 0) {
+                summary += '<p class="growth"><strong>Growth Opportunities:</strong> ' + growth.join(', ') + '</p>';
+            }
+            
+            if (strengths.length === 0 && growth.length === 0) {
+                summary += '<p>You rated yourself moderately across all skills—a solid foundation to build from!</p>';
+            }
+            
+            // Save to localStorage
+            const reflections = {
+                growthAreas: document.getElementById('growth-areas').value,
+                strengths: document.getElementById('strengths').value
+            };
+            
+            localStorage.setItem('medstation_f6_ratings', JSON.stringify(ratings));
+            localStorage.setItem('medstation_f6_reflections', JSON.stringify(reflections));
+            
+            // Show results
+            document.getElementById('results-summary').innerHTML = summary;
+            document.getElementById('results').classList.add('show');
+            document.getElementById('submit-assessment').style.display = 'none';
+            
+            updateProgress(100);
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function completeModule() {
+            localStorage.setItem('medstation_f6_complete', 'true');
+            localStorage.setItem('medstation_f6_progress', '100');
+            localStorage.setItem('medstation_foundation_complete', 'true');
+            
+            document.getElementById('completion-banner').classList.add('show');
+            document.getElementById('completion-banner').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Progress tracking
+        let maxScroll = 0;
+        window.addEventListener('scroll', function() {
+            const scrolled = window.scrollY;
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrolled > maxScroll) {
+                maxScroll = scrolled;
+                const progress = Math.min(Math.round((maxScroll / totalHeight) * 70), 70);
+                updateProgress(progress);
+            }
+        });
+        
+        function updateProgress(percent) {
+            const fill = document.getElementById('progress-fill');
+            const text = document.getElementById('progress-text');
+            const currentWidth = parseInt(fill.style.width) || 0;
+            if (percent > currentWidth) {
+                fill.style.width = percent + '%';
+                text.textContent = percent + '% Complete';
+                localStorage.setItem('medstation_f6_progress', percent);
+            }
+        }
+        
+        window.addEventListener('load', function() {
+            const savedProgress = localStorage.getItem('medstation_f6_progress');
+            if (savedProgress) updateProgress(parseInt(savedProgress));
+            
+            // Restore saved ratings
+            const savedRatings = localStorage.getItem('medstation_f6_ratings');
+            if (savedRatings) {
+                const parsed = JSON.parse(savedRatings);
+                for (const [skill, value] of Object.entries(parsed)) {
+                    ratings[skill] = value;
+                    const container = document.querySelector(`[data-skill="${skill}"]`);
+                    if (container) {
+                        const option = container.querySelector(`[data-value="${value}"]`);
+                        if (option) option.classList.add('selected');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

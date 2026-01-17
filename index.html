@@ -3,48 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medstation Healthcare Learning Fellowship 2026</title>
+    <title>Medstation Applied Learning Experience 2026</title>
     <style>
         :root {
-            --primary: #1B4F72;
-            --secondary: #2874A6;
-            --light-blue: #EBF5FB;
-            --light-green: #D5F5E3;
-            --accent: #27AE60;
+            --primary-red: #CC1D1B;
+            --cta-red: #E30512;
+            --warm-neutral: #D0C9BD;
+            --light-bg: #F4EEE8;
+            --accent-brown: #998871;
+            --charcoal: #3C3C3C;
+            --white: #FFFFFF;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            background: var(--white);
             min-height: 100vh;
-            color: #333;
+            color: var(--charcoal);
         }
         
         .header {
-            background: var(--primary);
-            color: white;
+            background: var(--white);
+            color: var(--charcoal);
             padding: 40px 20px;
             text-align: center;
+            border-bottom: 3px solid var(--primary-red);
         }
         
-        .header h1 {
-            font-size: 42px;
-            letter-spacing: 3px;
+        .header-logo {
+            max-width: 280px;
+            height: auto;
             margin-bottom: 10px;
         }
         
         .header .tagline {
-            font-size: 18px;
-            opacity: 0.9;
-            font-style: italic;
+            font-size: 16px;
+            color: var(--charcoal);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
         
         .header .subtitle {
             font-size: 24px;
             margin-top: 20px;
             font-weight: normal;
+            color: var(--primary-red);
         }
         
         .container {
@@ -54,26 +60,26 @@
         }
         
         .welcome-box {
-            background: white;
+            background: var(--light-bg);
             border-radius: 12px;
             padding: 30px;
             margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary-red);
         }
         
         .welcome-box h2 {
-            color: var(--primary);
+            color: var(--primary-red);
             margin-bottom: 15px;
         }
         
         .welcome-box p {
             line-height: 1.7;
-            color: #555;
+            color: var(--charcoal);
         }
         
         .progress-overview {
-            background: var(--light-green);
+            background: var(--warm-neutral);
             border-radius: 12px;
             padding: 25px 30px;
             margin-bottom: 40px;
@@ -86,7 +92,7 @@
         
         .progress-text {
             font-size: 18px;
-            color: var(--primary);
+            color: var(--charcoal);
         }
         
         .progress-bar-container {
@@ -97,31 +103,31 @@
         
         .progress-bar {
             height: 20px;
-            background: #ddd;
+            background: var(--white);
             border-radius: 10px;
             overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent), #2ECC71);
+            background: linear-gradient(90deg, var(--primary-red), var(--cta-red));
             border-radius: 10px;
             transition: width 0.5s ease;
         }
         
         .progress-count {
             font-size: 14px;
-            color: #666;
+            color: var(--charcoal);
             margin-top: 5px;
             text-align: right;
         }
         
         .section-title {
-            color: var(--primary);
+            color: var(--primary-red);
             font-size: 28px;
             margin-bottom: 25px;
             padding-bottom: 10px;
-            border-bottom: 3px solid var(--light-blue);
+            border-bottom: 3px solid var(--warm-neutral);
         }
         
         .modules-grid {
@@ -132,23 +138,24 @@
         }
         
         .module-card {
-            background: white;
+            background: var(--white);
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s, box-shadow 0.3s;
             text-decoration: none;
             color: inherit;
             display: block;
+            border: 1px solid var(--warm-neutral);
         }
         
         .module-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
         }
         
         .module-header {
-            background: var(--primary);
+            background: var(--primary-red);
             color: white;
             padding: 20px;
             position: relative;
@@ -156,7 +163,7 @@
         
         .module-number {
             font-size: 14px;
-            opacity: 0.8;
+            opacity: 0.9;
             margin-bottom: 5px;
         }
         
@@ -179,21 +186,22 @@
         }
         
         .status-complete {
-            background: var(--accent);
+            background: #27AE60;
             color: white;
         }
         
         .status-incomplete {
-            background: #ddd;
-            color: #999;
+            background: rgba(255,255,255,0.3);
+            color: white;
         }
         
         .module-body {
             padding: 20px;
+            background: var(--white);
         }
         
         .module-description {
-            color: #666;
+            color: var(--charcoal);
             font-size: 14px;
             line-height: 1.6;
             margin-bottom: 15px;
@@ -203,7 +211,7 @@
             display: flex;
             justify-content: space-between;
             font-size: 13px;
-            color: #888;
+            color: var(--accent-brown);
         }
         
         .module-required {
@@ -226,7 +234,7 @@
         }
         
         .resource-card {
-            background: white;
+            background: var(--white);
             border-radius: 10px;
             padding: 25px;
             text-align: center;
@@ -234,6 +242,7 @@
             text-decoration: none;
             color: inherit;
             transition: transform 0.3s;
+            border: 1px solid var(--warm-neutral);
         }
         
         .resource-card:hover {
@@ -246,18 +255,18 @@
         }
         
         .resource-title {
-            color: var(--primary);
+            color: var(--primary-red);
             font-weight: bold;
             margin-bottom: 8px;
         }
         
         .resource-desc {
             font-size: 13px;
-            color: #666;
+            color: var(--charcoal);
         }
         
         .footer {
-            background: var(--primary);
+            background: var(--charcoal);
             color: white;
             text-align: center;
             padding: 30px 20px;
@@ -265,12 +274,12 @@
         }
         
         .footer p {
-            opacity: 0.8;
+            opacity: 0.9;
             font-size: 14px;
         }
         
         @media (max-width: 600px) {
-            .header h1 { font-size: 28px; }
+            .header-logo { max-width: 200px; }
             .modules-grid { grid-template-columns: 1fr; }
             .progress-overview { flex-direction: column; text-align: center; }
         }
@@ -278,14 +287,14 @@
 </head>
 <body>
     <div class="header">
-        <h1>MEDSTATION</h1>
-        <div class="tagline">Cuidado com Propósito</div>
-        <div class="subtitle">Healthcare Learning Fellowship 2026</div>
+        <img src="logo.png" alt="Medstation" class="header-logo">
+        <div class="tagline">A Clínica do Brasileiro no Mundo</div>
+        <div class="subtitle">Applied Learning Experience 2026</div>
     </div>
     
     <div class="container">
         <div class="welcome-box">
-            <h2>Welcome, Fellow! 👋</h2>
+            <h2>Welcome! 👋</h2>
             <p>This learning experience will introduce you to U.S. healthcare operations through interactive modules and hands-on projects. Complete the foundation modules below, then work with your mentor on your assigned project. Remember: the primary purpose is your learning—focus on understanding deeply and asking great questions.</p>
         </div>
         
@@ -410,8 +419,8 @@
     </div>
     
     <div class="footer">
-        <p>Medstation Healthcare Learning Fellowship 2026</p>
-        <p style="margin-top: 10px; font-size: 12px;">Questions? Contact fellowship@medstation.com</p>
+        <p>Medstation Applied Learning Experience 2026</p>
+        <p style="margin-top: 10px; font-size: 12px;">Questions? Contact careers@medstation.com</p>
     </div>
     
     <script>
